@@ -18,6 +18,11 @@ A creator ↔ brand distribution platform. This repo has two parts:
 - **Fraunces** + **Inter Tight** via `next/font`
 - **Clerk** auth with creator/brand roles gating `/dashboard/*`
 
+## Deploy
+
+See **[DEPLOY.md](./DEPLOY.md)** for Vercel deployment (CLI or dashboard) and the
+full environment-variable / API-keys checklist.
+
 ## Quick start (the app)
 
 ```bash
