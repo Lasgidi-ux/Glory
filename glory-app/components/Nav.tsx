@@ -39,6 +39,7 @@ export default function Nav() {
   }, []);
 
   const { isSignedIn } = useUser();
+  const signupsOpen = process.env.NEXT_PUBLIC_SIGNUPS_OPEN === "true";
 
   return (
     <motion.header
@@ -81,6 +82,7 @@ export default function Nav() {
           Career
         </a>
         {isSignedIn ? (
+          // Logged-in users always get a way back to their dashboard.
           <a
             href="/dashboard"
             data-hover
@@ -88,7 +90,8 @@ export default function Nav() {
           >
             Dashboard
           </a>
-        ) : (
+        ) : signupsOpen ? (
+          // Launch mode: push signups.
           <>
             <a
               href="/sign-in"
@@ -105,6 +108,15 @@ export default function Nav() {
               Get started
             </a>
           </>
+        ) : (
+          // Pre-launch: waitlist stays the star; quiet Sign in for invited users.
+          <a
+            href="/sign-in"
+            data-hover
+            className="link text-[color:var(--color-ink-soft)]"
+          >
+            Sign in
+          </a>
         )}
       </nav>
 

@@ -88,6 +88,19 @@ Then run `glory-app/supabase/schema.sql` in the Supabase SQL editor once.
    (dev keys work on any domain; production keys are domain-scoped).
 5. **Supabase:** confirm `schema.sql` ran and the service-role key is set.
 
+## Launch toggle (waitlist → signups)
+
+`NEXT_PUBLIC_SIGNUPS_OPEN` controls how the landing routes visitors:
+
+- **`false` (default, pre-launch):** waitlist is the primary CTA; the nav shows
+  only a quiet **Sign in** (for invited/test users). Use this until you've
+  deployed and seeded some creators.
+- **`true` (launch):** the nav shows a prominent **Get started → /sign-up**.
+
+Flip the var and redeploy — no code change. For a **hard** gate (block public
+account creation entirely), also set sign-ups to **Restricted** in the Clerk
+dashboard and invite users manually; `Sign in` still works for them.
+
 ## What works at each stage
 - **No keys:** landing page, animations, WebGL hero — all live.
 - **+ Clerk:** sign-up/in, `/onboarding` role pick, protected dashboards.
