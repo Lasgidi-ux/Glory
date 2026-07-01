@@ -12,6 +12,11 @@ import {
   marketplaceLive,
 } from "@/lib/marketplace";
 import { getPayoutStatus, createEscrowCheckout, releaseEscrow } from "@/lib/payments";
+import {
+  notifyOfferSent,
+  notifyOfferAccepted,
+  notifyOfferDelivered,
+} from "@/lib/notify";
 
 async function requireRole(role: "creator" | "brand") {
   const { userId } = await auth();
@@ -35,12 +40,11 @@ export async function sendOffer(formData: FormData) {
     redirect("/dashboard/brand?notice=demo");
   }
 
-  const res = await createOffer({
-    brandId,
-    creatorId,
-    scope,
-    priceCents: Math.round(dollars * 100),
-  });
+  const priceCents = Math.round(dollars * 100);
+  const res = await createOffer({ brandId, creatorId, scope, priceCents });
+  if (res.ok) {
+    await notifyOfferSent({ creatorId, scope, priceCents });
+  }
   revalidatePath("/dashboard/brand");
   redirect(`/dashboard/brand?notice=${res.ok ? "offer_sent" : "error"}`);
 }
@@ -50,6 +54,8 @@ export async function acceptOffer(offerId: string) {
   const creatorId = await requireRole("creator");
   if (!marketplaceLive()) redirect("/dashboard/creator?notice=demo");
   await setOfferStatus(offerId, "accepted", { column: "creator_id", value: creatorId });
+  const accepted = await getOffer(offerId);
+  if (accepted) await notifyOfferAccepted(accepted);
   revalidatePath("/dashboard/creator");
   redirect("/dashboard/creator?notice=accepted");
 }
@@ -67,6 +73,8 @@ export async function markDelivered(offerId: string) {
   const creatorId = await requireRole("creator");
   if (!marketplaceLive()) redirect("/dashboard/creator?notice=demo");
   await setOfferStatus(offerId, "delivered", { column: "creator_id", value: creatorId });
+  const delivered = await getOffer(offerId);
+  if (delivered) await notifyOfferDelivered(delivered);
   revalidatePath("/dashboard/creator");
   redirect("/dashboard/creator?notice=delivered");
 }

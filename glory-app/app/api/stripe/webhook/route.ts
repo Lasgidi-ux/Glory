@@ -2,7 +2,8 @@ import { NextResponse } from "next/server";
 import type Stripe from "stripe";
 import { getStripe } from "@/lib/stripe";
 import { markPayoutsEnabled } from "@/lib/payments";
-import { setOfferStatus, upsertDealForOffer } from "@/lib/marketplace";
+import { setOfferStatus, upsertDealForOffer, getOffer } from "@/lib/marketplace";
+import { notifyOfferFunded, notifyOfferReleased } from "@/lib/notify";
 
 // Stripe webhook. Configure the endpoint in the Stripe dashboard and set
 // STRIPE_WEBHOOK_SECRET. Uses the raw request body for signature verification.
@@ -47,6 +48,8 @@ export async function POST(req: Request) {
           amountCents: session.amount_total ?? 0,
           status: "escrow",
         });
+        const offer = await getOffer(offerId);
+        if (offer) await notifyOfferFunded(offer);
       }
       break;
     }
@@ -63,6 +66,8 @@ export async function POST(req: Request) {
           amountCents: pi.amount,
           status: "released",
         });
+        const offer = await getOffer(offerId);
+        if (offer) await notifyOfferReleased(offer);
       }
       break;
     }
