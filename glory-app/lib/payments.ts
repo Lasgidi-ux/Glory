@@ -110,3 +110,43 @@ export async function releaseEscrow(
   await stripe.paymentIntents.capture(paymentIntentId);
   return { ok: true };
 }
+
+/**
+ * Brand-facing escrow: a hosted Stripe Checkout session that authorizes (not
+ * captures) the brand's payment and routes it to the creator's connected
+ * account minus the platform fee. Funds sit in escrow until we capture on
+ * delivery. Returns the Checkout URL to redirect the brand to.
+ */
+export async function createEscrowCheckout(params: {
+  offerId: string;
+  amountCents: number;
+  creatorAccountId: string;
+}): Promise<{ url?: string; error?: string }> {
+  const stripe = getStripe();
+  if (!stripe) return { error: "Stripe is not configured on the server." };
+
+  const fee = Math.round((params.amountCents * PLATFORM_FEE_BPS) / 10000);
+  const session = await stripe.checkout.sessions.create({
+    mode: "payment",
+    line_items: [
+      {
+        quantity: 1,
+        price_data: {
+          currency: "usd",
+          unit_amount: params.amountCents,
+          product_data: { name: `GLORY deal · ${params.offerId}` },
+        },
+      },
+    ],
+    payment_intent_data: {
+      capture_method: "manual",
+      application_fee_amount: fee,
+      transfer_data: { destination: params.creatorAccountId },
+      metadata: { offerId: params.offerId },
+    },
+    metadata: { offerId: params.offerId },
+    success_url: `${appUrl()}/dashboard/brand?funded=${params.offerId}`,
+    cancel_url: `${appUrl()}/dashboard/brand?cancelled=${params.offerId}`,
+  });
+  return { url: session.url ?? undefined };
+}

@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import type Stripe from "stripe";
 import { getStripe } from "@/lib/stripe";
 import { markPayoutsEnabled } from "@/lib/payments";
-import { getSupabaseAdmin } from "@/lib/supabase/server";
+import { setOfferStatus, upsertDealForOffer } from "@/lib/marketplace";
 
 // Stripe webhook. Configure the endpoint in the Stripe dashboard and set
 // STRIPE_WEBHOOK_SECRET. Uses the raw request body for signature verification.
@@ -30,38 +30,46 @@ export async function POST(req: Request) {
       await markPayoutsEnabled(acct.id, enabled);
       break;
     }
-    case "payment_intent.amount_capturable_updated": {
-      // Funds authorized and held in escrow.
-      await updateDeal(event.data.object as Stripe.PaymentIntent, "escrow");
+
+    case "checkout.session.completed": {
+      // Brand paid → funds authorized and held. Move the offer to escrow.
+      const session = event.data.object as Stripe.Checkout.Session;
+      const offerId = session.metadata?.offerId;
+      const pi =
+        typeof session.payment_intent === "string"
+          ? session.payment_intent
+          : session.payment_intent?.id;
+      if (offerId && pi) {
+        await setOfferStatus(offerId, "in_escrow");
+        await upsertDealForOffer({
+          offerId,
+          paymentIntentId: pi,
+          amountCents: session.amount_total ?? 0,
+          status: "escrow",
+        });
+      }
       break;
     }
+
     case "payment_intent.succeeded": {
-      // Captured → released to the creator.
-      await updateDeal(event.data.object as Stripe.PaymentIntent, "released");
+      // Escrow captured → released to the creator.
+      const pi = event.data.object as Stripe.PaymentIntent;
+      const offerId = pi.metadata?.offerId;
+      if (offerId) {
+        await setOfferStatus(offerId, "released");
+        await upsertDealForOffer({
+          offerId,
+          paymentIntentId: pi.id,
+          amountCents: pi.amount,
+          status: "released",
+        });
+      }
       break;
     }
+
     default:
       break;
   }
 
   return NextResponse.json({ received: true });
-}
-
-async function updateDeal(pi: Stripe.PaymentIntent, status: string) {
-  const db = getSupabaseAdmin();
-  if (!db) return;
-  try {
-    await db
-      .from("deals")
-      .upsert(
-        {
-          stripe_payment_id: pi.id,
-          amount_cents: pi.amount,
-          status,
-        },
-        { onConflict: "stripe_payment_id" }
-      );
-  } catch {
-    // scaffold: swallow if deals table isn't reachable yet
-  }
 }

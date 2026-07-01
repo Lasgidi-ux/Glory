@@ -80,7 +80,7 @@ Then run `glory-app/supabase/schema.sql` in the Supabase SQL editor once.
    for correct Stripe Connect return links).
 2. **Stripe webhook:** dashboard.stripe.com → Developers → Webhooks → *Add
    endpoint* → `https://<your-domain>/api/stripe/webhook`. Subscribe to
-   `account.updated`, `payment_intent.amount_capturable_updated`,
+   `account.updated`, `checkout.session.completed`,
    `payment_intent.succeeded`. Copy the signing secret into
    `STRIPE_WEBHOOK_SECRET` and redeploy.
 3. **Stripe Connect:** enable Connect in the Stripe dashboard (Express accounts).
