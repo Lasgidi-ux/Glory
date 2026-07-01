@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { useUser } from "@clerk/nextjs";
 
 function useISTClock() {
   const [t, setT] = useState("IST 07:23 PM");
@@ -37,6 +38,8 @@ export default function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const { isSignedIn } = useUser();
+
   return (
     <motion.header
       initial={{ y: -20, opacity: 0 }}
@@ -70,16 +73,39 @@ export default function Nav() {
         </a>
       </nav>
 
-      <nav className="flex items-center gap-8 text-[13px] uppercase tracking-[0.14em]">
-        <a href="#creators" data-hover className="link">
+      <nav className="flex items-center gap-6 text-[13px] uppercase tracking-[0.14em] sm:gap-8">
+        <a href="#creators" data-hover className="link hidden sm:inline">
           Creator
         </a>
-        <a href="#brands" data-hover className="link">
+        <a href="#brands" data-hover className="link hidden sm:inline">
           Career
         </a>
-        <a href="/sign-in" data-hover className="link text-[color:var(--color-gold-soft)]">
-          Sign in
-        </a>
+        {isSignedIn ? (
+          <a
+            href="/dashboard"
+            data-hover
+            className="rounded-full bg-[color:var(--color-gold)] px-4 py-2 text-[12px] font-semibold normal-case tracking-normal text-[#0a0906] transition-transform hover:-translate-y-[1px] hover:bg-[color:var(--color-gold-soft)]"
+          >
+            Dashboard
+          </a>
+        ) : (
+          <>
+            <a
+              href="/sign-in"
+              data-hover
+              className="link text-[color:var(--color-ink-soft)]"
+            >
+              Sign in
+            </a>
+            <a
+              href="/sign-up"
+              data-hover
+              className="rounded-full bg-[color:var(--color-gold)] px-4 py-2 text-[12px] font-semibold normal-case tracking-normal text-[#0a0906] transition-transform hover:-translate-y-[1px] hover:bg-[color:var(--color-gold-soft)]"
+            >
+              Get started
+            </a>
+          </>
+        )}
       </nav>
 
       <style>{`
