@@ -6,6 +6,15 @@
 
 create extension if not exists "pgcrypto";
 
+-- ---------- waitlist (public landing signups) ----------
+create table if not exists public.waitlist (
+  id         uuid primary key default gen_random_uuid(),
+  email      text unique not null,
+  role       text check (role in ('creator','brand')),
+  source     text,
+  created_at timestamptz not null default now()
+);
+
 -- ---------- profiles ----------
 create table if not exists public.profiles (
   id                uuid primary key default gen_random_uuid(),
@@ -66,6 +75,7 @@ create index if not exists idx_offers_brand      on public.offers(brand_id);
 -- "supabase" and configure Supabase to accept it, so auth.jwt()->>'sub'
 -- equals the Clerk user id. Until then, RLS below denies anon access.
 -- ============================================================
+alter table public.waitlist enable row level security;
 alter table public.profiles enable row level security;
 alter table public.listings enable row level security;
 alter table public.offers   enable row level security;

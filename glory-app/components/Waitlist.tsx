@@ -6,17 +6,34 @@ import Reveal from "./Reveal";
 export default function Waitlist() {
   const [email, setEmail] = useState("");
   const [done, setDone] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [note, setNote] = useState("No spam. Just the invite and the launch date.");
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     const ok = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.trim());
     if (!ok) {
       setNote("Enter a valid email to claim your spot.");
       return;
     }
-    // TODO: POST to /api/waitlist (Supabase / Resend) in a later pass.
-    setDone(true);
+    setLoading(true);
+    try {
+      const res = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email.trim() }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        setNote(data.error ?? "Something went wrong. Try again.");
+        setLoading(false);
+        return;
+      }
+      setDone(true);
+    } catch {
+      setNote("Network error. Try again.");
+      setLoading(false);
+    }
   };
 
   return (
@@ -62,14 +79,16 @@ export default function Waitlist() {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@domain.com"
               aria-label="Email address"
-              className="flex-1 rounded-[100px] border border-[color:var(--hair)] bg-transparent px-5 py-4 text-[15px] text-[color:var(--color-ink)] outline-none transition-colors focus:border-[color:var(--color-gold)] max-sm:rounded-xl"
+              disabled={loading}
+              className="flex-1 rounded-[100px] border border-[color:var(--hair)] bg-transparent px-5 py-4 text-[15px] text-[color:var(--color-ink)] outline-none transition-colors focus:border-[color:var(--color-gold)] disabled:opacity-50 max-sm:rounded-xl"
             />
             <button
               type="submit"
               data-hover
-              className="rounded-[100px] bg-[color:var(--color-gold)] px-[30px] py-4 text-[15px] font-semibold text-[#0a0906] transition-transform duration-300 hover:-translate-y-[2px] hover:bg-[color:var(--color-gold-soft)] max-sm:rounded-xl"
+              disabled={loading}
+              className="rounded-[100px] bg-[color:var(--color-gold)] px-[30px] py-4 text-[15px] font-semibold text-[#0a0906] transition-transform duration-300 hover:-translate-y-[2px] hover:bg-[color:var(--color-gold-soft)] disabled:cursor-not-allowed disabled:opacity-50 max-sm:rounded-xl"
             >
-              Request invite
+              {loading ? "Joining…" : "Request invite"}
             </button>
           </form>
         )}
