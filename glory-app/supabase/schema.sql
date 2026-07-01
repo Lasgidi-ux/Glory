@@ -8,12 +8,14 @@ create extension if not exists "pgcrypto";
 
 -- ---------- profiles ----------
 create table if not exists public.profiles (
-  id            uuid primary key default gen_random_uuid(),
-  clerk_user_id text unique not null,
-  role          text not null check (role in ('creator','brand')),
-  handle        text,
-  display_name  text,
-  created_at    timestamptz not null default now()
+  id                uuid primary key default gen_random_uuid(),
+  clerk_user_id     text unique not null,
+  role              text not null check (role in ('creator','brand')),
+  handle            text,
+  display_name      text,
+  stripe_account_id text,          -- Stripe Connect (Express) account for creators
+  payouts_enabled   boolean not null default false,
+  created_at        timestamptz not null default now()
 );
 
 -- ---------- listings (a creator's sellable reach) ----------
@@ -44,8 +46,8 @@ create table if not exists public.offers (
 -- ---------- deals (a signed offer moving to payout) ----------
 create table if not exists public.deals (
   id                 uuid primary key default gen_random_uuid(),
-  offer_id           uuid not null references public.offers(id) on delete cascade,
-  stripe_payment_id  text,
+  offer_id           uuid references public.offers(id) on delete cascade,
+  stripe_payment_id  text unique,
   amount_cents       integer not null default 0,
   status             text not null default 'escrow'
                        check (status in ('escrow','released','refunded')),

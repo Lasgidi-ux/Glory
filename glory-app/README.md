@@ -40,13 +40,28 @@ lib/gsap.ts              GSAP + ScrollTrigger registration
 public/art/              cropped, text-free hero artwork
 ```
 
-## Phase 3 — wire the product (next)
+## Phase 3 — status
 
-- **Auth:** Clerk (creator vs. brand roles) → protect `/dashboard/*`
-- **Data:** Supabase (Postgres) — profiles, listings, offers, deals
-- **Payments:** Stripe Connect — escrow + creator payouts
-- **Waitlist:** `POST /api/waitlist` → Supabase + Resend confirmation
-- **Media:** Mux/Cloudinary for creator reels
+- ✅ **Auth:** Clerk (creator vs. brand roles) → `proxy.ts` protects `/dashboard/*`
+- ✅ **Data:** Supabase (Postgres) — `supabase/schema.sql` + `lib/data.ts` (mock fallback until configured)
+- ✅ **Payments:** Stripe Connect — see below
+- ⬜ **Waitlist:** `POST /api/waitlist` → Supabase + Resend confirmation
+- ⬜ **Media:** Mux/Cloudinary for creator reels
+
+### Payments (Stripe Connect)
+
+- **Onboarding:** creator dashboard → "Set up payouts" → `POST /api/stripe/connect`
+  creates/reuses a Stripe **Express** account (id stored in Clerk `privateMetadata`,
+  so it works even before Supabase) and returns an onboarding link.
+- **Escrow:** `createEscrowPaymentIntent` (`lib/payments.ts`) — a manual-capture
+  destination charge that holds the brand's funds and routes to the creator
+  minus a `PLATFORM_FEE_BPS` platform fee.
+- **Release:** `releaseEscrow` captures the PaymentIntent on delivery.
+- **Webhook:** `POST /api/stripe/webhook` (signature-verified) flips
+  `payoutsEnabled` on `account.updated` and syncs `deals` on payment events.
+- Everything is **env-guarded** — no `STRIPE_SECRET_KEY` → payments stay in demo mode.
+
+Local webhook testing: `stripe listen --forward-to localhost:3000/api/stripe/webhook`
 
 ## Notes
 

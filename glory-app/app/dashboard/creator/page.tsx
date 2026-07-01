@@ -2,6 +2,8 @@ import { redirect } from "next/navigation";
 import { auth } from "@clerk/nextjs/server";
 import { getRole } from "@/lib/roles";
 import { getCreatorData } from "@/lib/data";
+import { getPayoutStatus } from "@/lib/payments";
+import PayoutBanner from "@/components/PayoutBanner";
 
 export const dynamic = "force-dynamic";
 
@@ -12,7 +14,10 @@ export default async function CreatorDashboard() {
   if (!role) redirect("/onboarding");
   if (role !== "creator") redirect(`/dashboard/${role}`);
 
-  const { stats, offers } = await getCreatorData(userId);
+  const [{ stats, offers }, payout] = await Promise.all([
+    getCreatorData(userId),
+    getPayoutStatus(userId),
+  ]);
 
   return (
     <main className="mx-auto max-w-[1100px] px-6 py-12 lg:px-10">
@@ -22,6 +27,8 @@ export default async function CreatorDashboard() {
         </p>
         <h1 className="mt-2 font-display text-4xl font-normal">Your reach, priced.</h1>
       </header>
+
+      <PayoutBanner status={payout} />
 
       <section className="grid grid-cols-2 gap-px border border-[color:var(--hair-2)] bg-[color:var(--hair-2)] md:grid-cols-4">
         {stats.map((s) => (
