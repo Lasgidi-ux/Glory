@@ -1,25 +1,18 @@
 import { redirect } from "next/navigation";
+import { auth } from "@clerk/nextjs/server";
 import { getRole } from "@/lib/roles";
+import { getBrandData } from "@/lib/data";
 
 export const dynamic = "force-dynamic";
 
-const stats = [
-  { l: "Live campaigns", v: "2" },
-  { l: "Creators engaged", v: "18" },
-  { l: "In escrow", v: "$41k" },
-  { l: "Avg. deal→live", v: "72h" },
-];
-
-const roster = [
-  { name: "@lumen", niche: "Design", reach: "1.2M", rate: "$3,500" },
-  { name: "@harlow", niche: "Fashion", reach: "840k", rate: "$2,900" },
-  { name: "@atlas.fm", niche: "Tech", reach: "2.6M", rate: "$6,000" },
-];
-
 export default async function BrandDashboard() {
+  const { userId } = await auth();
+  if (!userId) redirect("/sign-in");
   const role = await getRole();
   if (!role) redirect("/onboarding");
   if (role !== "brand") redirect(`/dashboard/${role}`);
+
+  const { stats, roster } = await getBrandData(userId);
 
   return (
     <main className="mx-auto max-w-[1100px] px-6 py-12 lg:px-10">

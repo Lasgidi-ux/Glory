@@ -1,25 +1,18 @@
 import { redirect } from "next/navigation";
+import { auth } from "@clerk/nextjs/server";
 import { getRole } from "@/lib/roles";
+import { getCreatorData } from "@/lib/data";
 
 export const dynamic = "force-dynamic";
 
-const stats = [
-  { l: "Active listings", v: "3" },
-  { l: "Open offers", v: "7" },
-  { l: "Pending payout", v: "$12.4k" },
-  { l: "Rights retained", v: "100%" },
-];
-
-const offers = [
-  { brand: "Aurea Labs", scope: "1× Reel + Story", price: "$4,200", status: "Awaiting sign" },
-  { brand: "Nord Atelier", scope: "3× posts", price: "$9,800", status: "In escrow" },
-  { brand: "Vesper", scope: "UGC pack", price: "$2,500", status: "Delivered" },
-];
-
 export default async function CreatorDashboard() {
+  const { userId } = await auth();
+  if (!userId) redirect("/sign-in");
   const role = await getRole();
   if (!role) redirect("/onboarding");
   if (role !== "creator") redirect(`/dashboard/${role}`);
+
+  const { stats, offers } = await getCreatorData(userId);
 
   return (
     <main className="mx-auto max-w-[1100px] px-6 py-12 lg:px-10">
