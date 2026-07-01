@@ -15,6 +15,11 @@ export type RosterCreator = {
   reach: string;
   rate: string;
 };
+export type MediaItem = {
+  publicId: string;
+  url: string;
+  resourceType: "image" | "video";
+};
 
 // ---------- formatting ----------
 const money = (cents: number) =>
@@ -159,5 +164,52 @@ export async function getBrandData(userId: string) {
     };
   } catch {
     return MOCK_BRAND;
+  }
+}
+
+// ---------- creator media (portfolio) ----------
+const MOCK_MEDIA: MediaItem[] = [
+  { publicId: "demo-1", url: "/art/scene-divine.jpg", resourceType: "image" },
+  { publicId: "demo-2", url: "/art/scene-creator.jpg", resourceType: "image" },
+  { publicId: "demo-3", url: "/art/hero-glory.jpg", resourceType: "image" },
+];
+
+export async function getCreatorMedia(userId: string): Promise<MediaItem[]> {
+  const db = getSupabaseAdmin();
+  if (!db) return MOCK_MEDIA;
+  try {
+    const { data } = await db
+      .from("media")
+      .select("public_id, url, resource_type")
+      .eq("creator_id", userId)
+      .order("created_at", { ascending: false })
+      .limit(24);
+    return (data ?? []).map((m) => ({
+      publicId: m.public_id,
+      url: m.url,
+      resourceType: (m.resource_type as "image" | "video") ?? "image",
+    }));
+  } catch {
+    return MOCK_MEDIA;
+  }
+}
+
+export async function addMedia(
+  userId: string,
+  item: MediaItem
+): Promise<{ ok: boolean; error?: string }> {
+  const db = getSupabaseAdmin();
+  if (!db) return { ok: false, error: "Supabase not configured" };
+  try {
+    const { error } = await db.from("media").insert({
+      creator_id: userId,
+      public_id: item.publicId,
+      url: item.url,
+      resource_type: item.resourceType,
+    });
+    if (error) throw error;
+    return { ok: true };
+  } catch {
+    return { ok: false, error: "Could not save media" };
   }
 }

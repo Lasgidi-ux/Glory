@@ -63,6 +63,17 @@ create table if not exists public.deals (
   created_at         timestamptz not null default now()
 );
 
+-- ---------- media (creator portfolio: images + reels, hosted on Cloudinary) ----------
+create table if not exists public.media (
+  id            uuid primary key default gen_random_uuid(),
+  creator_id    text not null references public.profiles(clerk_user_id) on delete cascade,
+  public_id     text not null,
+  resource_type text not null default 'image' check (resource_type in ('image','video')),
+  url           text not null,
+  created_at    timestamptz not null default now()
+);
+
+create index if not exists idx_media_creator    on public.media(creator_id);
 create index if not exists idx_listings_creator on public.listings(creator_id);
 create index if not exists idx_offers_creator   on public.offers(creator_id);
 create index if not exists idx_offers_brand      on public.offers(brand_id);
@@ -76,6 +87,7 @@ create index if not exists idx_offers_brand      on public.offers(brand_id);
 -- equals the Clerk user id. Until then, RLS below denies anon access.
 -- ============================================================
 alter table public.waitlist enable row level security;
+alter table public.media    enable row level security;
 alter table public.profiles enable row level security;
 alter table public.listings enable row level security;
 alter table public.offers   enable row level security;

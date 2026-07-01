@@ -65,6 +65,13 @@ Then run `glory-app/supabase/schema.sql` in the Supabase SQL editor once.
 | `RESEND_API_KEY` | `re_…` | resend.com/api-keys |
 | `WAITLIST_FROM_EMAIL` | `GLORY <hello@yourdomain.com>` | a verified sender/domain |
 
+### 5) Cloudinary — creator media uploads (images + reels)
+| Key | Example / value | Where |
+|---|---|---|
+| `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME` | `your-cloud` | console.cloudinary.com (Dashboard) |
+| `CLOUDINARY_API_KEY` | `1234567890` | same page |
+| `CLOUDINARY_API_SECRET` | `••••••••` | same page — **server-side secret** |
+
 ---
 
 ## Post-deploy steps
@@ -87,3 +94,4 @@ Then run `glory-app/supabase/schema.sql` in the Supabase SQL editor once.
 - **+ Supabase:** dashboards show real rows; waitlist + profiles persist.
 - **+ Stripe:** creator payout onboarding, escrow, release.
 - **+ Resend:** waitlist confirmation emails.
+- **+ Cloudinary:** creator portfolio image/reel uploads.

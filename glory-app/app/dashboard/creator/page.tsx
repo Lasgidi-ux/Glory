@@ -1,9 +1,11 @@
 import { redirect } from "next/navigation";
 import { auth } from "@clerk/nextjs/server";
 import { getRole } from "@/lib/roles";
-import { getCreatorData } from "@/lib/data";
+import { getCreatorData, getCreatorMedia } from "@/lib/data";
 import { getPayoutStatus } from "@/lib/payments";
+import { isCloudinaryConfigured } from "@/lib/cloudinary";
 import PayoutBanner from "@/components/PayoutBanner";
+import MediaUploader from "@/components/MediaUploader";
 
 export const dynamic = "force-dynamic";
 
@@ -14,9 +16,10 @@ export default async function CreatorDashboard() {
   if (!role) redirect("/onboarding");
   if (role !== "creator") redirect(`/dashboard/${role}`);
 
-  const [{ stats, offers }, payout] = await Promise.all([
+  const [{ stats, offers }, payout, media] = await Promise.all([
     getCreatorData(userId),
     getPayoutStatus(userId),
+    getCreatorMedia(userId),
   ]);
 
   return (
@@ -59,6 +62,8 @@ export default async function CreatorDashboard() {
           ))}
         </div>
       </section>
+
+      <MediaUploader items={media} enabled={isCloudinaryConfigured()} />
     </main>
   );
 }

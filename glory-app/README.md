@@ -45,8 +45,8 @@ public/art/              cropped, text-free hero artwork
 - ✅ **Auth:** Clerk (creator vs. brand roles) → `proxy.ts` protects `/dashboard/*`
 - ✅ **Data:** Supabase (Postgres) — `supabase/schema.sql` + `lib/data.ts` (mock fallback until configured)
 - ✅ **Payments:** Stripe Connect — see below
-- ⬜ **Waitlist:** `POST /api/waitlist` → Supabase + Resend confirmation
-- ⬜ **Media:** Mux/Cloudinary for creator reels
+- ✅ **Waitlist:** `POST /api/waitlist` → Supabase + Resend confirmation
+- ✅ **Media:** Cloudinary signed uploads (images + reels) → creator portfolio
 
 ### Payments (Stripe Connect)
 
