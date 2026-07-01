@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>GLORY — The last real arbitrage in distribution.</title>
+<meta name="description" content="GLORY is the distribution engine behind the world's biggest brands and names. Where elite creators and the brands that need them meet, deal, and get paid." />
+<meta name="theme-color" content="#0a0906" />
+
+<!-- Open Graph -->
+<meta property="og:title" content="GLORY — Behind the world's biggest brands and names." />
+<meta property="og:description" content="The last real arbitrage in distribution. A marketplace for elite creators and the brands that need them." />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="assets/hero-glory.jpg" />
+
+<script>document.documentElement.classList.add('js');</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Fraunces: variable serif for the logotype / display. Inter Tight: clean grotesk for UI. -->
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   GLORY — design tokens
+   ============================================================ */
+:root{
+  --bg:#0a0906;          /* near-black warm */
+  --bg-2:#12100b;
+  --panel:#161309;
+  --paper:#f4efe4;       /* warm off-white for light section */
+  --ink:#f4efe4;         /* text on dark */
+  --ink-soft:#b9b09b;
+  --ink-mute:#8a8069;
+  --gold:#c8a24a;        /* primary accent */
+  --gold-soft:#e6c983;
+  --gold-deep:#8f7128;
+  --hair:rgba(200,162,74,.22);
+  --hair-2:rgba(244,239,228,.12);
+
+  --maxw:1400px;
+  --pad:clamp(20px,5vw,72px);
+  --sect:clamp(96px,13vw,200px);
+
+  --font-display:"Fraunces", Georgia, serif;
+  --font-ui:"Inter Tight", system-ui, sans-serif;
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%; scroll-behavior:auto}
+html,body{margin:0}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--font-ui);
+  font-size:16px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  cursor:none;
+}
+@media (pointer:coarse){ body{cursor:auto} }
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+::selection{background:var(--gold);color:#0a0906}
+
+/* film grain overlay */
+.grain{
+  position:fixed; inset:0; z-index:9998; pointer-events:none; opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* custom cursor */
+.cursor{position:fixed;top:0;left:0;z-index:9999;pointer-events:none;mix-blend-mode:difference;will-change:transform}
+.cursor .dot{position:absolute;width:7px;height:7px;border-radius:50%;background:#fff;transform:translate(-50%,-50%)}
+.cursor .ring{position:absolute;width:38px;height:38px;border:1px solid #fff;border-radius:50%;transform:translate(-50%,-50%);transition:width .3s var(--ease),height .3s var(--ease),opacity .3s}
+.cursor.hover .ring{width:64px;height:64px;opacity:.6}
+@media (pointer:coarse){ .cursor{display:none} }
+
+/* ---------- layout helpers ---------- */
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--pad)}
+.eyebrow{font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);font-weight:500}
+.mono{font-variant-numeric:tabular-nums;letter-spacing:.02em}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:22px var(--pad);
+  transition:background .4s var(--ease),backdrop-filter .4s;
+}
+.nav.scrolled{background:rgba(10,9,6,.6);backdrop-filter:blur(14px);border-bottom:1px solid var(--hair)}
+.nav .logo{display:flex;align-items:center;gap:12px;font-family:var(--font-display);font-weight:600;letter-spacing:.02em;font-size:20px}
+.nav .logo svg{width:30px;height:16px}
+.nav .mid{display:flex;gap:36px;font-size:13px;letter-spacing:.06em;color:var(--ink-soft)}
+.nav .right{display:flex;gap:32px;align-items:center;font-size:13px;letter-spacing:.14em;text-transform:uppercase}
+.nav a.link{position:relative}
+.nav a.link::after{content:"";position:absolute;left:0;bottom:-4px;height:1px;width:0;background:var(--gold);transition:width .35s var(--ease)}
+.nav a.link:hover::after{width:100%}
+@media (max-width:860px){ .nav .mid{display:none} .nav .right{gap:18px} }
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:flex-end;overflow:hidden}
+.hero__bg{position:absolute;inset:-8% -4% -4% -4%;z-index:0;will-change:transform}
+.hero__bg img{width:100%;height:112%;object-fit:cover;object-position:70% 40%}
+.hero__scrim{position:absolute;inset:0;z-index:1;
+  background:
+    linear-gradient(180deg,rgba(10,9,6,.7) 0%,rgba(10,9,6,.15) 22%,rgba(10,9,6,.1) 52%,rgba(10,9,6,.78) 82%,rgba(10,9,6,.96) 100%),
+    radial-gradient(130% 90% at 18% 92%,rgba(10,9,6,.85),transparent 62%);
+}
+.hero__inner{position:relative;z-index:2;width:100%;padding:0 var(--pad) clamp(40px,7vh,90px);max-width:var(--maxw);margin:0 auto}
+.hero__tag{max-width:440px;font-size:clamp(13px,1.3vw,15px);letter-spacing:.16em;text-transform:uppercase;color:#e9e2d2;line-height:1.7;margin-bottom:8px;text-shadow:0 1px 24px rgba(10,9,6,.9),0 1px 3px rgba(10,9,6,.8)}
+.hero__title{
+  font-family:var(--font-display);
+  font-weight:400;
+  font-size:clamp(88px,22vw,340px);
+  line-height:.86;
+  letter-spacing:-.02em;
+  margin:0;
+  color:var(--gold-soft);
+  text-shadow:0 2px 60px rgba(10,9,6,.5);
+}
+.hero__title .w{display:inline-block;overflow:hidden}
+.hero__title .w > span{display:inline-block;transform:translateY(105%)}
+.hero__meta{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-top:26px;padding-top:22px;border-top:1px solid var(--hair);flex-wrap:wrap}
+.hero__meta p{margin:0;max-width:420px;color:var(--ink-soft);font-size:14px}
+.scrollcue{display:flex;align-items:center;gap:10px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-mute)}
+.scrollcue .bar{width:1px;height:34px;background:var(--gold);opacity:.6;animation:drop 1.8s var(--ease) infinite}
+@keyframes drop{0%{transform:scaleY(0);transform-origin:top}45%{transform:scaleY(1);transform-origin:top}55%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ============================================================
+   MARQUEE
+   ============================================================ */
+.marquee{border-top:1px solid var(--hair-2);border-bottom:1px solid var(--hair-2);padding:26px 0;overflow:hidden;background:var(--bg-2)}
+.marquee__row{display:flex;gap:64px;white-space:nowrap;width:max-content;animation:scrollx 34s linear infinite}
+.marquee__row span{font-family:var(--font-display);font-size:clamp(22px,3vw,40px);color:var(--ink-mute);font-weight:400;font-style:italic;display:flex;align-items:center;gap:64px}
+.marquee__row span::after{content:"✦";font-style:normal;color:var(--gold);font-size:14px}
+@keyframes scrollx{to{transform:translateX(-50%)}}
+
+/* ============================================================
+   reveal utility
+   ============================================================ */
+.js .reveal{opacity:0;transform:translateY(34px)}
+.js .reveal.in{opacity:1;transform:none;transition:opacity 1s var(--ease),transform 1s var(--ease)}
+
+/* ============================================================
+   SECTION: ARBITRAGE (big statement)
+   ============================================================ */
+.statement{padding:var(--sect) 0}
+.statement h2{
+  font-family:var(--font-display);font-weight:300;
+  font-size:clamp(30px,4.6vw,72px);line-height:1.1;letter-spacing:-.01em;margin:0;max-width:20ch;
+}
+.statement h2 em{font-style:italic;color:var(--gold-soft)}
+.statement .lead{margin-top:32px;max-width:56ch;color:var(--ink-soft);font-size:clamp(15px,1.5vw,19px)}
+
+/* ============================================================
+   SPLIT: creator / brand
+   ============================================================ */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--hair-2)}
+.split .card{background:var(--bg);padding:clamp(40px,6vw,88px) var(--pad);min-height:60vh;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
+.split .card .num{font-family:var(--font-display);color:var(--gold);font-size:15px}
+.split .card h3{font-family:var(--font-display);font-weight:400;font-size:clamp(32px,4vw,58px);margin:18px 0 0;line-height:1.02}
+.split .card p{color:var(--ink-soft);max-width:40ch;margin:16px 0 0}
+.split .card ul{list-style:none;padding:0;margin:34px 0 0;display:flex;flex-direction:column;gap:14px}
+.split .card li{display:flex;gap:14px;align-items:baseline;font-size:15px;color:var(--ink)}
+.split .card li::before{content:"→";color:var(--gold);font-family:var(--font-display)}
+.split .card .glow{position:absolute;inset:auto -20% -30% -20%;height:60%;background:radial-gradient(60% 100% at 50% 100%,rgba(200,162,74,.14),transparent 70%);pointer-events:none}
+@media (max-width:860px){ .split{grid-template-columns:1fr} }
+
+/* ============================================================
+   SHOWCASE (parallax image band)
+   ============================================================ */
+.showcase{position:relative;height:88vh;overflow:hidden;display:flex;align-items:center;justify-content:center;text-align:center}
+.showcase__bg{position:absolute;inset:-12% 0;will-change:transform}
+.showcase__bg img{width:100%;height:124%;object-fit:cover;object-position:center}
+.showcase::after{content:"";position:absolute;inset:0;background:radial-gradient(80% 80% at 50% 50%,rgba(10,9,6,.15),rgba(10,9,6,.8))}
+.showcase .in{position:relative;z-index:2;max-width:22ch}
+.showcase h2{font-family:var(--font-display);font-weight:300;font-style:italic;font-size:clamp(34px,6vw,96px);margin:0;line-height:1;color:var(--paper)}
+
+/* ============================================================
+   STATS
+   ============================================================ */
+.stats{padding:var(--sect) 0;border-top:1px solid var(--hair-2)}
+.stats__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--hair-2);border:1px solid var(--hair-2)}
+.stat{background:var(--bg);padding:clamp(30px,4vw,54px)}
+.stat .n{font-family:var(--font-display);font-weight:300;font-size:clamp(48px,7vw,104px);line-height:1;color:var(--gold-soft)}
+.stat .l{margin-top:12px;color:var(--ink-mute);font-size:13px;letter-spacing:.14em;text-transform:uppercase}
+@media (max-width:760px){ .stats__grid{grid-template-columns:1fr} }
+
+/* ============================================================
+   HOW IT WORKS
+   ============================================================ */
+.steps{padding:var(--sect) 0}
+.steps h2{font-family:var(--font-display);font-weight:300;font-size:clamp(28px,4vw,60px);margin:0 0 60px}
+.step{display:grid;grid-template-columns:100px 1fr;gap:clamp(20px,5vw,80px);padding:38px 0;border-top:1px solid var(--hair-2);align-items:baseline}
+.step:last-child{border-bottom:1px solid var(--hair-2)}
+.step .k{font-family:var(--font-display);color:var(--gold);font-size:clamp(22px,3vw,34px)}
+.step h4{font-family:var(--font-display);font-weight:400;font-size:clamp(22px,2.6vw,34px);margin:0}
+.step p{color:var(--ink-soft);margin:12px 0 0;max-width:52ch}
+@media (max-width:640px){ .step{grid-template-columns:1fr;gap:8px} }
+
+/* ============================================================
+   CTA / waitlist
+   ============================================================ */
+.cta{padding:var(--sect) 0;text-align:center;position:relative;overflow:hidden}
+.cta .glow{position:absolute;inset:auto 0 -40% 0;height:80%;background:radial-gradient(50% 100% at 50% 100%,rgba(200,162,74,.2),transparent 70%);pointer-events:none}
+.cta h2{font-family:var(--font-display);font-weight:400;font-size:clamp(44px,9vw,150px);line-height:.9;margin:0;color:var(--gold-soft)}
+.cta p{color:var(--ink-soft);margin:22px auto 0;max-width:46ch}
+.form{margin:44px auto 0;max-width:520px;display:flex;gap:10px;position:relative;z-index:2}
+.form input{flex:1;background:transparent;border:1px solid var(--hair);color:var(--ink);padding:16px 20px;border-radius:100px;font-family:var(--font-ui);font-size:15px;outline:none;transition:border-color .3s}
+.form input:focus{border-color:var(--gold)}
+.form button{background:var(--gold);color:#0a0906;border:none;padding:16px 30px;border-radius:100px;font-family:var(--font-ui);font-weight:600;font-size:15px;cursor:none;transition:transform .3s var(--ease),background .3s}
+.form button:hover{transform:translateY(-2px);background:var(--gold-soft)}
+.form__note{margin-top:16px;font-size:12px;color:var(--ink-mute);letter-spacing:.08em}
+@media (max-width:560px){ .form{flex-direction:column;border-radius:20px} .form input,.form button{border-radius:12px} }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer{border-top:1px solid var(--hair-2);padding:60px 0 40px}
+.footer__top{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap;align-items:flex-start}
+.footer .logo{font-family:var(--font-display);font-size:clamp(40px,10vw,130px);color:var(--ink);line-height:.9;font-weight:400}
+.footer__cols{display:flex;gap:clamp(30px,6vw,90px);flex-wrap:wrap}
+.footer__col h5{color:var(--ink-mute);font-size:12px;letter-spacing:.16em;text-transform:uppercase;margin:0 0 16px;font-weight:500}
+.footer__col a{display:block;color:var(--ink-soft);padding:5px 0;font-size:14px;transition:color .3s}
+.footer__col a:hover{color:var(--gold)}
+.footer__base{display:flex;justify-content:space-between;margin-top:60px;padding-top:24px;border-top:1px solid var(--hair-2);color:var(--ink-mute);font-size:12px;letter-spacing:.06em;flex-wrap:wrap;gap:12px}
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+<div class="cursor" aria-hidden="true"><div class="ring"></div><div class="dot"></div></div>
+
+<!-- ================= NAV ================= -->
+<header class="nav" id="nav">
+  <a class="logo" href="#top" data-hover>
+    <svg viewBox="0 0 60 30" fill="none"><path d="M15 5a10 10 0 100 20 10 10 0 000-20zm30 0a10 10 0 100 20 10 10 0 000-20z" stroke="currentColor" stroke-width="3"/></svg>
+    GLORY
+  </a>
+  <nav class="mid mono">
+    <span id="clock">IST 07:23 PM</span>
+    <a href="#waitlist" class="link">EMAIL</a>
+  </nav>
+  <nav class="right">
+    <a href="#creators" class="link" data-hover>Creator</a>
+    <a href="#brands" class="link" data-hover>Career</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- ================= HERO ================= -->
+  <section class="hero" id="hero">
+    <div class="hero__bg" id="heroBg">
+      <img src="assets/hero-glory.jpg" alt="A gilded figure raising a sword against a serpent above fallen classical ruins." />
+    </div>
+    <div class="hero__scrim"></div>
+    <div class="hero__inner">
+      <p class="hero__tag reveal">Behind the world's biggest<br>brands and names. The last real<br>arbitrage in distribution.</p>
+      <h1 class="hero__title" aria-label="Glory">
+        <span class="w"><span>G</span></span><span class="w"><span>l</span></span><span class="w"><span>o</span></span><span class="w"><span>r</span></span><span class="w"><span>y</span></span>
+      </h1>
+      <div class="hero__meta">
+        <p class="reveal">A distribution engine where elite creators and the brands that need them meet, deal, and get paid — without the agency tax.</p>
+        <div class="scrollcue"><span>Scroll</span><span class="bar"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= MARQUEE ================= -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__row">
+      <span>Creators</span><span>Brands</span><span>Distribution</span><span>Deals</span><span>Payouts</span><span>Reach</span>
+      <span>Creators</span><span>Brands</span><span>Distribution</span><span>Deals</span><span>Payouts</span><span>Reach</span>
+    </div>
+  </div>
+
+  <!-- ================= STATEMENT ================= -->
+  <section class="statement wrap">
+    <p class="eyebrow reveal">The thesis</p>
+    <h2 class="reveal" style="margin-top:22px">Attention is the only currency left. <em>Distribution</em> is the only way to spend it.</h2>
+    <p class="lead reveal">Every brand is fighting for the same feeds. The creators who own those feeds are stuck negotiating in DMs, chasing invoices, and leaving money on the table. GLORY closes the gap — a single marketplace where reach is priced, deals are signed, and payouts clear the moment the work ships.</p>
+  </section>
+
+  <!-- ================= SPLIT ================= -->
+  <section class="split">
+    <div class="card reveal" id="creators">
+      <div>
+        <span class="num">01 / Creators</span>
+        <h3>Sell your reach<br>like the asset it is.</h3>
+        <p>Your audience is inventory. Price it, list it, and let the brands come to you.</p>
+      </div>
+      <ul>
+        <li>Set your rates, keep your rights</li>
+        <li>Instant payouts via Stripe — no 60-day waits</li>
+        <li>One profile, every platform's numbers</li>
+      </ul>
+      <div class="glow"></div>
+    </div>
+    <div class="card reveal" id="brands">
+      <div>
+        <span class="num">02 / Brands</span>
+        <h3>Buy distribution,<br>not promises.</h3>
+        <p>Skip the agency markup. Find vetted creators, run the deal, measure the lift.</p>
+      </div>
+      <ul>
+        <li>Vetted roster with real audience data</li>
+        <li>Escrowed deals — pay on delivery</li>
+        <li>Campaign analytics in one dashboard</li>
+      </ul>
+      <div class="glow"></div>
+    </div>
+  </section>
+
+  <!-- ================= SHOWCASE ================= -->
+  <section class="showcase">
+    <div class="showcase__bg" id="showBg"><img src="assets/scene-divine.jpg" alt="A luminous winged figure crowned in gold light." /></div>
+    <div class="in">
+      <h2>Reach is the<br>new real estate.</h2>
+    </div>
+  </section>
+
+  <!-- ================= STATS ================= -->
+  <section class="stats wrap">
+    <p class="eyebrow reveal">By the numbers</p>
+    <div class="stats__grid" style="margin-top:34px">
+      <div class="stat reveal"><div class="n" data-count="0">$0</div><div class="l">Agency tax paid</div></div>
+      <div class="stat reveal"><div class="n" data-count="72">72h</div><div class="l">Avg. deal to payout</div></div>
+      <div class="stat reveal"><div class="n" data-count="100">100%</div><div class="l">Rights kept by creators</div></div>
+    </div>
+  </section>
+
+  <!-- ================= STEPS ================= -->
+  <section class="steps wrap">
+    <h2 class="reveal">How the deal moves.</h2>
+    <div class="step reveal"><div class="k">01</div><div><h4>List or discover</h4><p>Creators publish their reach and rates. Brands browse a vetted roster filtered by audience, platform, and price.</p></div></div>
+    <div class="step reveal"><div class="k">02</div><div><h4>Deal in the open</h4><p>Scope, timeline, and price agreed in one thread. Funds move into escrow the moment both sides sign.</p></div></div>
+    <div class="step reveal"><div class="k">03</div><div><h4>Ship & get paid</h4><p>Work goes live, the brand confirms, and Stripe releases payout — often the same day. No invoices, no chasing.</p></div></div>
+  </section>
+
+  <!-- ================= CTA ================= -->
+  <section class="cta" id="waitlist">
+    <div class="glow"></div>
+    <div class="wrap">
+      <p class="eyebrow reveal">Founding cohort · 2026</p>
+      <h2 class="reveal" style="margin-top:20px">Claim<br>your glory.</h2>
+      <p class="reveal">We're onboarding a first wave of creators and brands. Get an invite before the gates open.</p>
+      <form class="form reveal" id="waitForm" novalidate>
+        <input type="email" name="email" placeholder="you@domain.com" aria-label="Email address" required />
+        <button type="submit" data-hover>Request invite</button>
+      </form>
+      <p class="form__note reveal" id="formNote">No spam. Just the invite and the launch date.</p>
+    </div>
+  </section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__top">
+      <div class="logo">GLORY</div>
+      <div class="footer__cols">
+        <div class="footer__col"><h5>Platform</h5><a href="#creators" data-hover>For creators</a><a href="#brands" data-hover>For brands</a><a href="#steps" data-hover>How it works</a></div>
+        <div class="footer__col"><h5>Company</h5><a href="#" data-hover>About</a><a href="#" data-hover>Careers</a><a href="#waitlist" data-hover>Contact</a></div>
+        <div class="footer__col"><h5>Legal</h5><a href="#" data-hover>Privacy</a><a href="#" data-hover>Terms</a></div>
+      </div>
+    </div>
+    <div class="footer__base">
+      <span>© 2026 GLORY. The last real arbitrage in distribution.</span>
+      <span class="mono" id="clock2">IST 07:23 PM</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ================= SCRIPTS ================= -->
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script>
+(function(){
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var hasGsap = typeof gsap !== "undefined";
+
+  /* ---------- Lenis smooth scroll ---------- */
+  var lenis = null;
+  if (typeof Lenis !== "undefined" && !reduce) {
+    lenis = new Lenis({ lerp:0.09, wheelMultiplier:1 });
+    function raf(t){ lenis.raf(t); requestAnimationFrame(raf); }
+    requestAnimationFrame(raf);
+    if (hasGsap && gsap.registerPlugin) {
+      gsap.registerPlugin(ScrollTrigger);
+      lenis.on("scroll", ScrollTrigger.update);
+    }
+  } else if (hasGsap && gsap.registerPlugin) {
+    gsap.registerPlugin(ScrollTrigger);
+  }
+
+  /* smooth anchor links through Lenis */
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener("click", function(e){
+      var id = a.getAttribute("href");
+      if (id.length < 2) return;
+      var el = document.querySelector(id);
+      if (!el) return;
+      e.preventDefault();
+      if (lenis) lenis.scrollTo(el, { offset:-20 });
+      else el.scrollIntoView({behavior:"smooth"});
+    });
+  });
+
+  /* ---------- nav scrolled state ---------- */
+  var nav = document.getElementById("nav");
+  function onScroll(){ if(window.scrollY>40) nav.classList.add("scrolled"); else nav.classList.remove("scrolled"); }
+  window.addEventListener("scroll", onScroll, {passive:true}); onScroll();
+
+  /* ---------- hero title reveal ---------- */
+  if (hasGsap && !reduce) {
+    gsap.to(".hero__title .w > span", { yPercent:0, duration:1.1, ease:"power4.out", stagger:0.06, delay:0.15 });
+  } else {
+    document.querySelectorAll(".hero__title .w > span").forEach(function(s){ s.style.transform="none"; });
+  }
+
+  /* ---------- generic reveals ---------- */
+  var reveals = document.querySelectorAll(".reveal");
+  if (hasGsap && !reduce) {
+    reveals.forEach(function(el){
+      gsap.to(el,{opacity:1,y:0,duration:1,ease:"power3.out",scrollTrigger:{trigger:el,start:"top 88%"}});
+      gsap.set(el,{opacity:0,y:34});
+    });
+  } else {
+    reveals.forEach(function(el){ el.classList.add("in"); });
+  }
+
+  /* ---------- parallax ---------- */
+  if (hasGsap && !reduce) {
+    gsap.to("#heroBg",{yPercent:16,ease:"none",scrollTrigger:{trigger:"#hero",start:"top top",end:"bottom top",scrub:true}});
+    gsap.fromTo("#showBg",{yPercent:-10},{yPercent:10,ease:"none",scrollTrigger:{trigger:".showcase",start:"top bottom",end:"bottom top",scrub:true}});
+  }
+
+  /* ---------- count-up stats ---------- */
+  document.querySelectorAll("[data-count]").forEach(function(el){
+    var target = parseInt(el.getAttribute("data-count"),10);
+    var suffix = el.textContent.replace(/[0-9]/g,"");
+    if (!hasGsap || reduce || target===0){ return; }
+    var obj={v:0};
+    gsap.to(obj,{v:target,duration:1.6,ease:"power2.out",scrollTrigger:{trigger:el,start:"top 90%"},
+      onUpdate:function(){ el.textContent = Math.round(obj.v)+suffix; }});
+  });
+
+  /* ---------- custom cursor ---------- */
+  var cursor = document.querySelector(".cursor");
+  if (cursor && window.matchMedia("(pointer:fine)").matches){
+    var cx=window.innerWidth/2, cy=window.innerHeight/2, tx=cx, ty=cy;
+    window.addEventListener("mousemove",function(e){ tx=e.clientX; ty=e.clientY; });
+    (function loop(){ cx+=(tx-cx)*0.2; cy+=(ty-cy)*0.2; cursor.style.transform="translate("+cx+"px,"+cy+"px)"; requestAnimationFrame(loop); })();
+    document.querySelectorAll("a,button,[data-hover]").forEach(function(el){
+      el.addEventListener("mouseenter",function(){cursor.classList.add("hover");});
+      el.addEventListener("mouseleave",function(){cursor.classList.remove("hover");});
+    });
+  }
+
+  /* ---------- live clock (IST) ---------- */
+  function tick(){
+    var now = new Date();
+    var ist = new Date(now.getTime() + (now.getTimezoneOffset()*60000) + (5.5*3600000));
+    var h=ist.getHours(), m=ist.getMinutes(), ap=h>=12?"PM":"AM";
+    h=h%12||12; var s="IST "+(h<10?"0"+h:h)+":"+(m<10?"0"+m:m)+" "+ap;
+    var c1=document.getElementById("clock"), c2=document.getElementById("clock2");
+    if(c1)c1.textContent=s; if(c2)c2.textContent=s;
+  }
+  tick(); setInterval(tick,10000);
+
+  /* ---------- waitlist (front-end only for now) ---------- */
+  var form=document.getElementById("waitForm"), note=document.getElementById("formNote");
+  if(form){
+    form.addEventListener("submit",function(e){
+      e.preventDefault();
+      var email=form.email.value.trim();
+      var ok=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email);
+      if(!ok){ note.textContent="Enter a valid email to claim your spot."; note.style.color="var(--gold-soft)"; return; }
+      form.innerHTML='<p style="margin:0;color:var(--gold-soft);font-family:var(--font-display);font-size:22px">You’re on the list. Glory awaits. ✦</p>';
+    });
+  }
+})();
+</script>
+</body>
+</html>
