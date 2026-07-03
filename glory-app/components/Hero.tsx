@@ -50,20 +50,30 @@ const word = "Glory".split("");
 export default function Hero() {
   const { mode, motionOk } = useHeroMode();
   const bgRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!motionOk || !bgRef.current) return;
+    if (!motionOk) return;
     const ctx = gsap.context(() => {
-      gsap.to(bgRef.current, {
-        yPercent: 12,
-        ease: "none",
-        scrollTrigger: {
-          trigger: "#hero",
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
+      const st = {
+        trigger: "#hero",
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+      } as const;
+      // The statue drifts down and scales up — a slow cinematic push-in.
+      if (bgRef.current) {
+        gsap.to(bgRef.current, { yPercent: 12, scale: 1.08, ease: "none", scrollTrigger: st });
+      }
+      // The headline lifts and dissolves as you enter the site.
+      if (contentRef.current) {
+        gsap.to(contentRef.current, {
+          yPercent: -14,
+          opacity: 0.12,
+          ease: "none",
+          scrollTrigger: st,
+        });
+      }
     });
     return () => {
       ctx.revert();
@@ -107,7 +117,10 @@ export default function Hero() {
       />
 
       {/* content */}
-      <div className="relative z-[2] mx-auto w-full max-w-[1400px] px-[clamp(20px,5vw,72px)] pb-[clamp(36px,7vh,90px)] pt-24">
+      <div
+        ref={contentRef}
+        className="relative z-[2] mx-auto w-full max-w-[1400px] px-[clamp(20px,5vw,72px)] pb-[clamp(36px,7vh,90px)] pt-24"
+      >
         <motion.p
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}

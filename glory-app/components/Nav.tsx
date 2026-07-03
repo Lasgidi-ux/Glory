@@ -36,13 +36,18 @@ export default function Nav() {
         className="flex items-center gap-2.5 font-display text-[18px] font-semibold tracking-[0.02em] sm:gap-3 sm:text-[20px]"
       >
         <svg
-          viewBox="0 0 72 32"
+          viewBox="0 0 150 48"
           fill="none"
-          className="h-[18px] w-[40px] text-[color:var(--color-gold-soft)]"
+          className="h-[17px] w-[52px] text-[color:var(--color-gold-soft)]"
           aria-hidden
         >
-          <ellipse cx="25" cy="16" rx="21" ry="13.5" stroke="currentColor" strokeWidth="3.4" />
-          <ellipse cx="47" cy="16" rx="21" ry="13.5" stroke="currentColor" strokeWidth="3.4" />
+          <path
+            d="M50 24 C40 2 8 10 12 24 C15 38 45 42 50 24 C58 8 92 8 100 24 C110 2 142 10 138 24 C135 38 105 42 100 24 C92 40 58 40 50 24 Z"
+            stroke="currentColor"
+            strokeWidth="9"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
         </svg>
         GLORY
       </a>
