@@ -1,6 +1,8 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { UserButton } from "@clerk/nextjs";
 import { getRole } from "@/lib/roles";
+import { clerkEnabled } from "@/lib/clerk";
 
 export const dynamic = "force-dynamic";
 
@@ -9,6 +11,7 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
+  if (!clerkEnabled()) redirect("/");
   const role = await getRole();
 
   const navItem = (href: string, label: string, active: boolean) => (

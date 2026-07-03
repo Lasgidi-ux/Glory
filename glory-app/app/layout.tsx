@@ -4,6 +4,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import Cursor from "@/components/Cursor";
+import { clerkEnabled } from "@/lib/clerk";
 
 const fraunces = Fraunces({
   variable: "--font-fraunces",
@@ -34,22 +35,27 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const tree = (
+    <html lang="en" className={`${fraunces.variable} ${interTight.variable}`}>
+      <body>
+        <div className="grain" aria-hidden />
+        <Cursor />
+        <SmoothScroll>{children}</SmoothScroll>
+      </body>
+    </html>
+  );
+
+  // Only mount ClerkProvider when configured — otherwise it throws
+  // "Missing publishableKey" and 500s the whole site.
+  if (!clerkEnabled()) return tree;
+
   return (
     <ClerkProvider
       appearance={{
-        variables: {
-          colorPrimary: "#c8a24a",
-          colorBackground: "#12100b",
-        },
+        variables: { colorPrimary: "#c8a24a", colorBackground: "#12100b" },
       }}
     >
-      <html lang="en" className={`${fraunces.variable} ${interTight.variable}`}>
-        <body>
-          <div className="grain" aria-hidden />
-          <Cursor />
-          <SmoothScroll>{children}</SmoothScroll>
-        </body>
-      </html>
+      {tree}
     </ClerkProvider>
   );
 }

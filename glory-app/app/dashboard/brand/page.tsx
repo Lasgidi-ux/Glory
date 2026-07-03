@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { auth } from "@clerk/nextjs/server";
 import { getRole } from "@/lib/roles";
+import { clerkEnabled } from "@/lib/clerk";
 import { getBrandData } from "@/lib/data";
 import { listBrandOffers, listCreators } from "@/lib/marketplace";
 import { money, offerStatusLabel } from "@/lib/format";
@@ -14,6 +15,7 @@ export default async function BrandDashboard({
 }: {
   searchParams: Promise<{ notice?: string }>;
 }) {
+  if (!clerkEnabled()) redirect("/");
   const { userId } = await auth();
   if (!userId) redirect("/sign-in");
   const role = await getRole();

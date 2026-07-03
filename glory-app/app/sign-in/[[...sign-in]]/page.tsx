@@ -1,6 +1,9 @@
+import { redirect } from "next/navigation";
 import { SignIn } from "@clerk/nextjs";
+import { clerkEnabled } from "@/lib/clerk";
 
 export default function SignInPage() {
+  if (!clerkEnabled()) redirect("/");
   return (
     <main className="flex min-h-screen items-center justify-center bg-[color:var(--color-bg)] px-6 py-24">
       <div className="w-full max-w-[420px]">

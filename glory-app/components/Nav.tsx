@@ -2,7 +2,8 @@
 
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { useUser } from "@clerk/nextjs";
+import { clerkEnabled } from "@/lib/clerk";
+import { NavAuthButtons, SignedOutButtons } from "./NavAuth";
 
 function useISTClock() {
   const [t, setT] = useState("IST 07:23 PM");
@@ -38,7 +39,6 @@ export default function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const { isSignedIn } = useUser();
   const signupsOpen = process.env.NEXT_PUBLIC_SIGNUPS_OPEN === "true";
 
   return (
@@ -81,42 +81,11 @@ export default function Nav() {
         <a href="#brands" data-hover className="link hidden sm:inline">
           Career
         </a>
-        {isSignedIn ? (
-          // Logged-in users always get a way back to their dashboard.
-          <a
-            href="/dashboard"
-            data-hover
-            className="rounded-full bg-[color:var(--color-gold)] px-4 py-2 text-[12px] font-semibold normal-case tracking-normal text-[#0a0906] transition-transform hover:-translate-y-[1px] hover:bg-[color:var(--color-gold-soft)]"
-          >
-            Dashboard
-          </a>
-        ) : signupsOpen ? (
-          // Launch mode: push signups.
-          <>
-            <a
-              href="/sign-in"
-              data-hover
-              className="link text-[color:var(--color-ink-soft)]"
-            >
-              Sign in
-            </a>
-            <a
-              href="/sign-up"
-              data-hover
-              className="rounded-full bg-[color:var(--color-gold)] px-4 py-2 text-[12px] font-semibold normal-case tracking-normal text-[#0a0906] transition-transform hover:-translate-y-[1px] hover:bg-[color:var(--color-gold-soft)]"
-            >
-              Get started
-            </a>
-          </>
+        {clerkEnabled() ? (
+          <NavAuthButtons signupsOpen={signupsOpen} />
         ) : (
-          // Pre-launch: waitlist stays the star; quiet Sign in for invited users.
-          <a
-            href="/sign-in"
-            data-hover
-            className="link text-[color:var(--color-ink-soft)]"
-          >
-            Sign in
-          </a>
+          // Clerk not configured yet — render signed-out buttons without hooks.
+          <SignedOutButtons signupsOpen={signupsOpen} />
         )}
       </nav>
 

@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { getRole } from "@/lib/roles";
+import { clerkEnabled } from "@/lib/clerk";
 import { setRole } from "./actions";
 
 export const dynamic = "force-dynamic";
@@ -25,6 +26,7 @@ const cards: {
 ];
 
 export default async function Onboarding() {
+  if (!clerkEnabled()) redirect("/");
   // Already onboarded? Skip straight to the dashboard.
   const existing = await getRole();
   if (existing) redirect(`/dashboard/${existing}`);

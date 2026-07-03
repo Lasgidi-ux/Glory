@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { auth } from "@clerk/nextjs/server";
 import { getRole } from "@/lib/roles";
+import { clerkEnabled } from "@/lib/clerk";
 import { getCreatorData, getCreatorMedia } from "@/lib/data";
 import { getPayoutStatus } from "@/lib/payments";
 import { listCreatorOffers } from "@/lib/marketplace";
@@ -18,6 +19,7 @@ export default async function CreatorDashboard({
 }: {
   searchParams: Promise<{ notice?: string }>;
 }) {
+  if (!clerkEnabled()) redirect("/");
   const { userId } = await auth();
   if (!userId) redirect("/sign-in");
   const role = await getRole();
