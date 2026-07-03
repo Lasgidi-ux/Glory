@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>GLORY — Legal · Privacy & Terms</title>
+<meta name="description" content="The fine print, made clear. GLORY's Privacy Policy and Terms of Service." />
+<meta name="theme-color" content="#0a0906" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0906; --bg2:#12100b; --panel:#161309;
+  --ink:#f4efe4; --ink-soft:#c3baa4; --ink-mute:#8a8069;
+  --gold:#c8a24a; --gold-soft:#e6c983;
+  --hair:rgba(200,162,74,.22); --hair2:rgba(244,239,228,.12);
+  --serif:"Fraunces",Georgia,serif; --ui:"Inter Tight",system-ui,sans-serif;
+  --maxw:1160px; --pad:clamp(20px,5vw,64px);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--ui);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+::selection{background:var(--gold);color:#0a0906}
+.grain{position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* nav */
+.nav{position:fixed;inset:0 0 auto 0;z-index:40;display:flex;align-items:center;justify-content:space-between;padding:18px var(--pad);transition:background .4s,backdrop-filter .4s}
+.nav.scrolled{background:rgba(10,9,6,.66);backdrop-filter:blur(14px);border-bottom:1px solid var(--hair)}
+.nav .logo{font-family:var(--serif);font-weight:600;font-size:20px;letter-spacing:.02em;display:flex;gap:10px;align-items:center}
+.nav .logo svg{width:28px;height:15px}
+.nav .back{font-size:13px;letter-spacing:.06em;color:var(--ink-soft)}
+.nav .back:hover{color:var(--gold)}
+
+/* hero */
+.hero{position:relative;min-height:78vh;min-height:78svh;display:flex;align-items:flex-end;overflow:hidden}
+.hero__bg{position:absolute;inset:0;z-index:0}
+.hero__bg img{width:100%;height:100%;object-fit:cover;object-position:80% center}
+.hero__scrim{position:absolute;inset:0;z-index:1;background:
+  linear-gradient(90deg,rgba(10,9,6,.96) 0%,rgba(10,9,6,.7) 38%,rgba(10,9,6,.15) 70%,rgba(10,9,6,.35) 100%),
+  linear-gradient(180deg,rgba(10,9,6,.7),rgba(10,9,6,0) 30%,rgba(10,9,6,.85) 100%)}
+.hero__in{position:relative;z-index:2;max-width:var(--maxw);margin:0 auto;width:100%;padding:0 var(--pad) clamp(40px,7vh,80px)}
+.eyebrow{font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.hero h1{font-family:var(--serif);font-weight:300;font-size:clamp(46px,8vw,104px);line-height:.95;letter-spacing:-.02em;margin:14px 0 0;color:var(--gold-soft)}
+.hero h1 em{font-style:italic}
+.hero p.sub{max-width:52ch;color:var(--ink-soft);font-size:clamp(15px,1.5vw,18px);margin:20px 0 0}
+.updated{margin-top:14px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-mute)}
+.tabs{display:flex;gap:10px;margin-top:28px;flex-wrap:wrap}
+.tabs a{border:1px solid var(--hair);padding:10px 20px;border-radius:100px;font-size:13px;letter-spacing:.08em;color:var(--ink);transition:.25s}
+.tabs a:hover{border-color:var(--gold);background:rgba(200,162,74,.1);color:var(--gold-soft)}
+
+/* template notice */
+.wrap{max-width:820px;margin:0 auto;padding:0 var(--pad)}
+.notice{max-width:820px;margin:clamp(48px,8vw,88px) auto 0;padding:0 var(--pad)}
+.notice__in{border:1px solid var(--hair);border-left:3px solid var(--gold);background:var(--panel);padding:18px 22px;border-radius:10px;color:var(--ink-soft);font-size:14px}
+.notice__in b{color:var(--gold-soft);font-weight:600}
+
+/* content */
+.legal{padding:clamp(48px,8vw,96px) 0 clamp(80px,12vw,160px)}
+.legal h2{font-family:var(--serif);font-weight:400;font-size:clamp(30px,4.6vw,52px);line-height:1.05;margin:0;color:var(--ink);scroll-margin-top:90px}
+.legal .lead{color:var(--ink-soft);margin:14px 0 40px;font-size:17px}
+.legal section+section{margin-top:clamp(64px,10vw,120px);padding-top:clamp(48px,7vw,80px);border-top:1px solid var(--hair2)}
+.clause{margin-top:34px}
+.clause h3{font-family:var(--serif);font-weight:500;font-size:20px;margin:0 0 8px;color:var(--gold-soft);display:flex;gap:12px;align-items:baseline}
+.clause h3 .n{font-size:13px;color:var(--gold);font-variant-numeric:tabular-nums}
+.clause p{margin:0 0 10px;color:var(--ink-soft)}
+.clause ul{margin:8px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+.clause li{display:flex;gap:12px;color:var(--ink-soft)}
+.clause li::before{content:"—";color:var(--gold);flex:none}
+.backtop{display:inline-block;margin-top:20px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute)}
+.backtop:hover{color:var(--gold)}
+
+/* footer */
+.footer{border-top:1px solid var(--hair2);padding:48px 0 40px}
+.footer__in{max-width:var(--maxw);margin:0 auto;padding:0 var(--pad);display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;color:var(--ink-mute);font-size:13px}
+.footer a:hover{color:var(--gold)}
+
+@media (max-width:720px){ .hero__bg img{object-position:72% center} }
+@media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} }
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden></div>
+
+<header class="nav" id="nav">
+  <a class="logo" href="../">
+    <svg viewBox="0 0 60 30" fill="none"><path d="M15 5a10 10 0 100 20 10 10 0 000-20zm30 0a10 10 0 100 20 10 10 0 000-20z" stroke="currentColor" stroke-width="3"/></svg>
+    GLORY
+  </a>
+  <a class="back" href="../">← Back to site</a>
+</header>
+
+<section class="hero">
+  <div class="hero__bg"><img src="../assets/legal-justice.jpg" alt="A gilded figure of Justice holding balanced scales, lit by a single shaft of light." /></div>
+  <div class="hero__scrim"></div>
+  <div class="hero__in">
+    <p class="eyebrow">Legal</p>
+    <h1>Justice,<br><em>by design.</em></h1>
+    <p class="sub">The fine print, made plain. How GLORY handles your data, and the terms that govern working inside the platform — written to be read, not skipped.</p>
+    <p class="updated">Last updated · 3 July 2026</p>
+    <nav class="tabs">
+      <a href="#privacy">Privacy Policy</a>
+      <a href="#terms">Terms of Service</a>
+    </nav>
+  </div>
+</section>
+
+<div class="notice">
+  <div class="notice__in"><b>Template notice.</b> This document is a thorough starting point tailored to GLORY, but it is not legal advice. Have a qualified lawyer review and adapt it — especially the governing-law, liability, and payments clauses — before you launch.</div>
+</div>
+
+<main class="legal wrap">
+
+  <!-- ===================== PRIVACY ===================== -->
+  <section id="privacy" aria-label="Privacy Policy">
+    <h2>Privacy Policy</h2>
+    <p class="lead">What we collect, why, who we share it with, and the control you keep over it.</p>
+
+    <div class="clause"><h3><span class="n">1</span> Who we are</h3>
+      <p>GLORY (“we”, “us”) operates a marketplace that connects creators with brands to price, sign, and settle distribution deals. This policy explains how we handle personal information when you use our website and app.</p>
+    </div>
+
+    <div class="clause"><h3><span class="n">2</span> What we collect</h3>
+      <ul>
+        <li><b>Account &amp; identity</b> — name, email, and login, managed by our authentication provider (Clerk), plus your chosen role (creator or brand).</li>
+        <li><b>Profile &amp; listings</b> — handles, audience figures, rates, portfolio media, and the offers, deals, and messages you create.</li>
+        <li><b>Payments</b> — processed by Stripe. We never see or store full card numbers; we retain deal amounts, payout status, and Stripe identifiers.</li>
+        <li><b>Media</b> — files you upload are stored with Cloudinary; we keep references and metadata.</li>
+        <li><b>Usage</b> — device, pages, and basic analytics/log data to keep the service secure and working.</li>
+      </ul>
+    </div>
+
+    <div class="clause"><h3><span class="n">3</span> How we use it</h3>
+      <ul>
+        <li>To run the marketplace — matching, offers, escrow, delivery, and payouts.</li>
+        <li>To send transactional email (deal updates, receipts, the waitlist confirmation) via Resend.</li>
+        <li>To keep accounts secure, prevent fraud and abuse, and meet legal obligations.</li>
+        <li>To improve the product. We do <b>not</b> sell your personal information.</li>
+      </ul>
+    </div>
+
+    <div class="clause"><h3><span class="n">4</span> Subprocessors we rely on</h3>
+      <ul>
+        <li><b>Clerk</b> — authentication &amp; account management</li>
+        <li><b>Supabase</b> — database &amp; storage</li>
+        <li><b>Stripe</b> — payments &amp; payouts (Stripe Connect)</li>
+        <li><b>Cloudinary</b> — media hosting</li>
+        <li><b>Resend</b> — transactional email</li>
+        <li><b>Vercel</b> — application hosting</li>
+      </ul>
+    </div>
+
+    <div class="clause"><h3><span class="n">5</span> Retention</h3>
+      <p>We keep your information for as long as your account is active and as needed to provide the service, resolve disputes, and comply with law (for example, financial records tied to payouts). Delete your account and we remove or anonymise personal data we no longer need.</p>
+    </div>
+
+    <div class="clause"><h3><span class="n">6</span> Your rights</h3>
+      <p>Depending on where you live, you may access, correct, export, or delete your personal data, and object to certain processing. Contact us and we’ll act within the timeframe the law requires.</p>
+    </div>
+
+    <div class="clause"><h3><span class="n">7</span> Security &amp; transfers</h3>
+      <p>We use reputable providers with encryption in transit and at rest, and least-privilege access on the server. Your data may be processed in countries other than yours; we rely on our providers’ safeguards for those transfers.</p>
+    </div>
+
+    <div class="clause"><h3><span class="n">8</span> Children</h3>
+      <p>GLORY is not intended for anyone under 18 (or the age of majority where you live). We don’t knowingly collect data from children.</p>
+    </div>
+
+    <div class="clause"><h3><span class="n">9</span> Changes &amp; contact</h3>
+      <p>We’ll post updates here and change the “last updated” date. Questions or requests: <a href="../#waitlist" style="color:var(--gold-soft)">contact us</a>.</p>
+      <a class="backtop" href="#top">↑ Back to top</a>
+    </div>
+  </section>
+
+  <!-- ===================== TERMS ===================== -->
+  <section id="terms" aria-label="Terms of Service">
+    <h2>Terms of Service</h2>
+    <p class="lead">The rules of the arena — what you agree to by using GLORY.</p>
+
+    <div class="clause"><h3><span class="n">1</span> Acceptance</h3>
+      <p>By creating an account or using GLORY you agree to these Terms. If you’re using GLORY for a company, you confirm you’re authorised to bind it.</p>
+    </div>
+
+    <div class="clause"><h3><span class="n">2</span> Accounts &amp; roles</h3>
+      <p>You pick a role — <b>creator</b> or <b>brand</b> — and are responsible for your account, your credentials, and the accuracy of what you publish (rates, audience figures, deliverables).</p>
+    </div>
+
+    <div class="clause"><h3><span class="n">3</span> The marketplace</h3>
+      <ul>
+        <li>A brand sends an offer; a creator accepts or declines.</li>
+        <li>On acceptance, the brand funds <b>escrow</b> through Stripe. Funds are authorised and held, not yet paid out.</li>
+        <li>The creator delivers; the brand releases; the payout is captured to the creator, minus the platform fee.</li>
+        <li>GLORY is the venue — the agreement for the work is between the creator and the brand.</li>
+      </ul>
+    </div>
+
+    <div class="clause"><h3><span class="n">4</span> Fees &amp; payments</h3>
+      <p>GLORY charges a platform fee on each completed deal, shown before funding. Payments and payouts are handled by Stripe and subject to Stripe’s terms. You’re responsible for your own taxes.</p>
+    </div>
+
+    <div class="clause"><h3><span class="n">5</span> Content &amp; intellectual property</h3>
+      <p>Creators keep ownership of the work they produce. You grant GLORY a limited licence to display your profile and portfolio to operate and promote the marketplace. Licences to the brand for the delivered work are set by your deal.</p>
+    </div>
+
+    <div class="clause"><h3><span class="n">6</span> Acceptable use</h3>
+      <ul>
+        <li>No fraud, fake metrics, spam, harassment, or infringing content.</li>
+        <li>No attempts to circumvent escrow, fees, or the platform’s security.</li>
+        <li>Follow the platform rules of any channel where the work is distributed.</li>
+      </ul>
+    </div>
+
+    <div class="clause"><h3><span class="n">7</span> Disputes, refunds &amp; chargebacks</h3>
+      <p>If a deal goes wrong, work with the other party first. Where escrow hasn’t been released, we may help mediate; refunds and chargebacks follow Stripe’s processes and these Terms.</p>
+    </div>
+
+    <div class="clause"><h3><span class="n">8</span> Disclaimers &amp; liability</h3>
+      <p>The service is provided “as is.” To the fullest extent permitted by law, GLORY isn’t liable for indirect or consequential losses, and our total liability is limited to the fees you paid us in the 3 months before the claim.</p>
+    </div>
+
+    <div class="clause"><h3><span class="n">9</span> Termination</h3>
+      <p>You can close your account anytime. We may suspend or end access for breach of these Terms. Obligations that should survive — payment, IP, liability — do.</p>
+    </div>
+
+    <div class="clause"><h3><span class="n">10</span> Governing law &amp; changes</h3>
+      <p>These Terms are governed by the laws of <b>[your jurisdiction]</b>. We may update them; material changes will be posted here with a new date. Continued use means you accept the update.</p>
+      <a class="backtop" href="#top">↑ Back to top</a>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="footer__in">
+    <span>© 2026 GLORY. The last real arbitrage in distribution.</span>
+    <span><a href="#privacy">Privacy</a> · <a href="#terms">Terms</a> · <a href="../">Home</a></span>
+  </div>
+</footer>
+
+<a id="top"></a>
+<script>
+  var nav=document.getElementById('nav');
+  function s(){ if(scrollY>40) nav.classList.add('scrolled'); else nav.classList.remove('scrolled'); }
+  addEventListener('scroll',s,{passive:true}); s();
+</script>
+</body>
+</html>

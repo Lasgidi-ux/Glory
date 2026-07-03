@@ -205,10 +205,27 @@ export default function Home() {
               {[
                 {
                   h: "Platform",
-                  a: ["For creators", "For brands", "How it works"],
+                  a: [
+                    { label: "For creators", href: "#creators" },
+                    { label: "For brands", href: "#brands" },
+                    { label: "How it works", href: "#steps" },
+                  ],
                 },
-                { h: "Company", a: ["About", "Careers", "Contact"] },
-                { h: "Legal", a: ["Privacy", "Terms"] },
+                {
+                  h: "Company",
+                  a: [
+                    { label: "About", href: "#" },
+                    { label: "Careers", href: "#" },
+                    { label: "Contact", href: "#waitlist" },
+                  ],
+                },
+                {
+                  h: "Legal",
+                  a: [
+                    { label: "Privacy", href: "/legal#privacy" },
+                    { label: "Terms", href: "/legal#terms" },
+                  ],
+                },
               ].map((col) => (
                 <div key={col.h}>
                   <h5 className="mb-4 text-xs font-medium uppercase tracking-[0.16em] text-[color:var(--color-ink-mute)]">
@@ -216,12 +233,12 @@ export default function Home() {
                   </h5>
                   {col.a.map((a) => (
                     <a
-                      key={a}
-                      href="#"
+                      key={a.label}
+                      href={a.href}
                       data-hover
                       className="block py-[5px] text-sm text-[color:var(--color-ink-soft)] transition-colors hover:text-[color:var(--color-gold)]"
                     >
-                      {a}
+                      {a.label}
                     </a>
                   ))}
                 </div>
