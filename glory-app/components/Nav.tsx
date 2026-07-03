@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { clerkEnabled } from "@/lib/clerk";
@@ -35,20 +36,14 @@ export default function Nav() {
         aria-label="GLORY — home"
         className="flex items-center gap-2.5 font-display text-[18px] font-semibold tracking-[0.02em] sm:gap-3 sm:text-[20px]"
       >
-        <svg
-          viewBox="0 0 150 48"
-          fill="none"
-          className="h-[17px] w-[52px] text-[color:var(--color-gold-soft)]"
-          aria-hidden
-        >
-          <path
-            d="M50 24 C40 2 8 10 12 24 C15 38 45 42 50 24 C58 8 92 8 100 24 C110 2 142 10 138 24 C135 38 105 42 100 24 C92 40 58 40 50 24 Z"
-            stroke="currentColor"
-            strokeWidth="9"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
+        <Image
+          src="/art/logo.png"
+          alt="GLORY"
+          width={1438}
+          height={526}
+          priority
+          className="h-[15px] w-auto sm:h-[17px]"
+        />
         GLORY
       </a>
 
