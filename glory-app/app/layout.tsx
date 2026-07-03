@@ -21,7 +21,9 @@ const interTight = Inter_Tight({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://glory.example.com"),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_APP_URL || "https://glory-coral.vercel.app"
+  ),
   title: "GLORY — The last real arbitrage in distribution.",
   description:
     "GLORY is the distribution engine behind the world's biggest brands and names. Where elite creators and the brands that need them meet, deal, and get paid.",

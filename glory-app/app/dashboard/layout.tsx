@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { redirect } from "next/navigation";
 import { UserButton } from "@clerk/nextjs";
 import { getRole } from "@/lib/roles";
@@ -31,7 +32,11 @@ export default async function DashboardLayout({
     <div className="min-h-screen bg-[color:var(--color-bg)]">
       <aside className="fixed inset-y-0 left-0 hidden w-[240px] flex-col justify-between border-r border-[color:var(--hair-2)] p-7 lg:flex">
         <div>
-          <Link href="/" className="font-display text-2xl font-semibold">
+          <Link
+            href="/"
+            className="flex items-center gap-2.5 font-display text-2xl font-semibold"
+          >
+            <Image src="/art/logo.png" alt="GLORY" width={1438} height={526} className="h-[16px] w-auto" />
             GLORY
           </Link>
           <nav className="mt-10 flex flex-col gap-1 text-sm">

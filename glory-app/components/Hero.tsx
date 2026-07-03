@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { heroBlur } from "@/lib/heroBlur";
 
 const HeroCanvas = dynamic(() => import("./HeroCanvas"), { ssr: false });
 
@@ -100,8 +101,11 @@ export default function Hero() {
             alt="A gilded figure raising a sword against a serpent above classical ruins."
             fill
             priority
+            fetchPriority="high"
+            placeholder="blur"
+            blurDataURL={heroBlur}
             sizes="100vw"
-            className="object-cover [object-position:78%_42%] sm:[object-position:74%_42%] lg:[object-position:70%_40%]"
+            className="object-cover [object-position:70%_38%] sm:[object-position:64%_42%] lg:[object-position:58%_44%]"
           />
         )}
       </div>

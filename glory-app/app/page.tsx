@@ -3,6 +3,7 @@ import Hero from "@/components/Hero";
 import Showcase from "@/components/Showcase";
 import Stats from "@/components/Stats";
 import Waitlist from "@/components/Waitlist";
+import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
 
 const marquee = [
@@ -194,63 +195,7 @@ export default function Home() {
 
       <Waitlist />
 
-      {/* footer */}
-      <footer className="border-t border-[color:var(--hair-2)] pb-10 pt-[60px]">
-        <div className="mx-auto max-w-[1400px] px-[clamp(20px,5vw,72px)]">
-          <div className="flex flex-wrap items-start justify-between gap-10">
-            <div className="font-display text-[clamp(40px,10vw,130px)] font-normal leading-[0.9]">
-              GLORY
-            </div>
-            <div className="flex flex-wrap gap-[clamp(30px,6vw,90px)]">
-              {[
-                {
-                  h: "Platform",
-                  a: [
-                    { label: "For creators", href: "#creators" },
-                    { label: "For brands", href: "#brands" },
-                    { label: "How it works", href: "#steps" },
-                  ],
-                },
-                {
-                  h: "Company",
-                  a: [
-                    { label: "About", href: "#" },
-                    { label: "Careers", href: "#" },
-                    { label: "Contact", href: "#waitlist" },
-                  ],
-                },
-                {
-                  h: "Legal",
-                  a: [
-                    { label: "Privacy", href: "/legal#privacy" },
-                    { label: "Terms", href: "/legal#terms" },
-                  ],
-                },
-              ].map((col) => (
-                <div key={col.h}>
-                  <h5 className="mb-4 text-xs font-medium uppercase tracking-[0.16em] text-[color:var(--color-ink-mute)]">
-                    {col.h}
-                  </h5>
-                  {col.a.map((a) => (
-                    <a
-                      key={a.label}
-                      href={a.href}
-                      data-hover
-                      className="block py-[5px] text-sm text-[color:var(--color-ink-soft)] transition-colors hover:text-[color:var(--color-gold)]"
-                    >
-                      {a.label}
-                    </a>
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="mt-[60px] flex flex-wrap justify-between gap-3 border-t border-[color:var(--hair-2)] pt-6 text-xs tracking-[0.06em] text-[color:var(--color-ink-mute)]">
-            <span>© 2026 GLORY. The last real arbitrage in distribution.</span>
-            <span>Built for the founding cohort.</span>
-          </div>
-        </div>
-      </footer>
+      <Footer />
 
       <style>{`
         @keyframes scrollx{to{transform:translateX(-50%)}}

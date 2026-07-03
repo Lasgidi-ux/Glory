@@ -31,7 +31,7 @@ img{max-width:100%;display:block}
 .nav{position:fixed;inset:0 0 auto 0;z-index:40;display:flex;align-items:center;justify-content:space-between;padding:18px var(--pad);transition:background .4s,backdrop-filter .4s}
 .nav.scrolled{background:rgba(10,9,6,.66);backdrop-filter:blur(14px);border-bottom:1px solid var(--hair)}
 .nav .logo{font-family:var(--serif);font-weight:600;font-size:20px;letter-spacing:.02em;display:flex;gap:10px;align-items:center}
-.nav .logo svg{width:28px;height:15px}
+.nav .logo img{height:17px;width:auto;display:block}
 .nav .back{font-size:13px;letter-spacing:.06em;color:var(--ink-soft)}
 .nav .back:hover{color:var(--gold)}
 
@@ -87,7 +87,7 @@ img{max-width:100%;display:block}
 
 <header class="nav" id="nav">
   <a class="logo" href="../">
-    <svg viewBox="0 0 60 30" fill="none"><path d="M15 5a10 10 0 100 20 10 10 0 000-20zm30 0a10 10 0 100 20 10 10 0 000-20z" stroke="currentColor" stroke-width="3"/></svg>
+    <img src="../assets/logo.png" alt="GLORY" />
     GLORY
   </a>
   <a class="back" href="../">← Back to site</a>

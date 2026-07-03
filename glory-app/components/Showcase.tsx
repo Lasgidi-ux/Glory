@@ -38,6 +38,8 @@ export default function Showcase() {
         <img
           src="/art/scene-divine.jpg"
           alt="A gilded, draped figure lit by divine gold light."
+          loading="lazy"
+          decoding="async"
           className="h-[124%] w-full object-cover"
         />
       </div>
