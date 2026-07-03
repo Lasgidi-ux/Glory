@@ -5,32 +5,8 @@ import { useEffect, useState } from "react";
 import { clerkEnabled } from "@/lib/clerk";
 import { NavAuthButtons, SignedOutButtons } from "./NavAuth";
 
-function useISTClock() {
-  const [t, setT] = useState("IST 07:23 PM");
-  useEffect(() => {
-    const tick = () => {
-      const now = new Date();
-      const ist = new Date(
-        now.getTime() + now.getTimezoneOffset() * 60000 + 5.5 * 3600000
-      );
-      let h = ist.getHours();
-      const m = ist.getMinutes();
-      const ap = h >= 12 ? "PM" : "AM";
-      h = h % 12 || 12;
-      setT(
-        `IST ${h < 10 ? "0" + h : h}:${m < 10 ? "0" + m : m} ${ap}`
-      );
-    };
-    tick();
-    const id = setInterval(tick, 10000);
-    return () => clearInterval(id);
-  }, []);
-  return t;
-}
-
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
-  const clock = useISTClock();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -46,40 +22,38 @@ export default function Nav() {
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.9, ease: [0.22, 0.61, 0.36, 1] }}
-      className={`fixed inset-x-0 top-0 z-30 flex items-center justify-between px-[clamp(20px,5vw,72px)] py-[22px] transition-[background,backdrop-filter] duration-500 ${
+      className={`fixed inset-x-0 top-0 z-30 flex items-center justify-between px-[clamp(16px,5vw,72px)] py-[16px] transition-[background,backdrop-filter] duration-500 sm:py-[22px] ${
         scrolled
-          ? "border-b border-[color:var(--hair)] bg-[rgba(10,9,6,.6)] backdrop-blur-[14px]"
+          ? "border-b border-[color:var(--hair)] bg-[rgba(10,9,6,.62)] backdrop-blur-[14px]"
           : ""
       }`}
     >
+      {/* logo: interlocking loops mark + wordmark */}
       <a
         href="#top"
         data-hover
-        className="flex items-center gap-3 font-display text-[20px] font-semibold tracking-[0.02em]"
+        aria-label="GLORY — home"
+        className="flex items-center gap-2.5 font-display text-[18px] font-semibold tracking-[0.02em] sm:gap-3 sm:text-[20px]"
       >
-        <svg viewBox="0 0 60 30" fill="none" className="h-4 w-[30px]">
-          <path
-            d="M15 5a10 10 0 100 20 10 10 0 000-20zm30 0a10 10 0 100 20 10 10 0 000-20z"
-            stroke="currentColor"
-            strokeWidth="3"
-          />
+        <svg
+          viewBox="0 0 72 32"
+          fill="none"
+          className="h-[18px] w-[40px] text-[color:var(--color-gold-soft)]"
+          aria-hidden
+        >
+          <ellipse cx="25" cy="16" rx="21" ry="13.5" stroke="currentColor" strokeWidth="3.4" />
+          <ellipse cx="47" cy="16" rx="21" ry="13.5" stroke="currentColor" strokeWidth="3.4" />
         </svg>
         GLORY
       </a>
 
-      <nav className="hidden items-center gap-9 text-[13px] tracking-[0.06em] text-[color:var(--color-ink-soft)] md:flex">
-        <span className="tabular-nums">{clock}</span>
-        <a href="#waitlist" className="link">
-          EMAIL
-        </a>
-      </nav>
-
-      <nav className="flex items-center gap-6 text-[13px] uppercase tracking-[0.14em] sm:gap-8">
-        <a href="#creators" data-hover className="link hidden sm:inline">
+      {/* nav links */}
+      <nav className="flex items-center gap-5 text-[13px] uppercase tracking-[0.14em] sm:gap-8">
+        <a href="#creators" data-hover className="link hidden md:inline">
           Creator
         </a>
-        <a href="#brands" data-hover className="link hidden sm:inline">
-          Career
+        <a href="#brands" data-hover className="link hidden md:inline">
+          Brands
         </a>
         {clerkEnabled() ? (
           <NavAuthButtons signupsOpen={signupsOpen} />

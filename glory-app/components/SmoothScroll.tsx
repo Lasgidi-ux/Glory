@@ -13,7 +13,10 @@ export default function SmoothScroll({
     const reduce = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
-    if (reduce) return;
+    const coarse = window.matchMedia("(pointer: coarse)").matches;
+    // Skip JS smooth-scroll on touch devices — native scroll is smoother and
+    // cheaper there, which keeps mobile fast.
+    if (reduce || coarse) return;
 
     const lenis = new Lenis({ lerp: 0.09, wheelMultiplier: 1 });
 

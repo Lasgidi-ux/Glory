@@ -94,7 +94,7 @@ img{max-width:100%;display:block}
 }
 .nav.scrolled{background:rgba(10,9,6,.6);backdrop-filter:blur(14px);border-bottom:1px solid var(--hair)}
 .nav .logo{display:flex;align-items:center;gap:12px;font-family:var(--font-display);font-weight:600;letter-spacing:.02em;font-size:20px}
-.nav .logo svg{width:30px;height:16px}
+.nav .logo svg{width:40px;height:18px;color:var(--gold-soft)}
 .nav .mid{display:flex;gap:36px;font-size:13px;letter-spacing:.06em;color:var(--ink-soft)}
 .nav .right{display:flex;gap:32px;align-items:center;font-size:13px;letter-spacing:.14em;text-transform:uppercase}
 .nav a.link{position:relative}
@@ -240,17 +240,14 @@ img{max-width:100%;display:block}
 
 <!-- ================= NAV ================= -->
 <header class="nav" id="nav">
-  <a class="logo" href="#top" data-hover>
-    <svg viewBox="0 0 60 30" fill="none"><path d="M15 5a10 10 0 100 20 10 10 0 000-20zm30 0a10 10 0 100 20 10 10 0 000-20z" stroke="currentColor" stroke-width="3"/></svg>
+  <a class="logo" href="#top" data-hover aria-label="GLORY — home">
+    <svg viewBox="0 0 72 32" fill="none" aria-hidden><ellipse cx="25" cy="16" rx="21" ry="13.5" stroke="currentColor" stroke-width="3.4"/><ellipse cx="47" cy="16" rx="21" ry="13.5" stroke="currentColor" stroke-width="3.4"/></svg>
     GLORY
   </a>
-  <nav class="mid mono">
-    <span id="clock">IST 07:23 PM</span>
-    <a href="#waitlist" class="link">EMAIL</a>
-  </nav>
   <nav class="right">
     <a href="#creators" class="link" data-hover>Creator</a>
-    <a href="#brands" class="link" data-hover>Career</a>
+    <a href="#brands" class="link" data-hover>Brands</a>
+    <a href="legal/" class="link" data-hover>Legal</a>
   </nav>
 </header>
 
