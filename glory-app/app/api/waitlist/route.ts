@@ -44,10 +44,10 @@ export async function POST(req: Request) {
       await resend.emails.send({
         from,
         to: email,
-        subject: "You're on the GLORY list ✦",
+        subject: "You're on the Cravagiq list ✦",
         text:
           "Glory awaits.\n\nYou're on the list for the founding cohort. " +
-          "We'll email you the moment the gates open.\n\n— GLORY",
+          "We'll email you the moment the gates open.\n\n— Cravagiq",
       });
     } catch {
       // non-fatal: signup still succeeds even if email delivery hiccups

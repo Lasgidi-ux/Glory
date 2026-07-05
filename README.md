@@ -1,4 +1,4 @@
-# GLORY
+# Cravagiq
 
 **Behind the world's biggest brands and names. The last real arbitrage in distribution.**
 

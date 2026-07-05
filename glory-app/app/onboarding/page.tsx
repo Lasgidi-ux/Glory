@@ -37,7 +37,7 @@ export default async function Onboarding() {
         One last step
       </p>
       <h1 className="mt-3 font-display text-[clamp(32px,5vw,56px)] font-light leading-[1.05]">
-        How will you use GLORY?
+        How will you use Cravagiq?
       </h1>
       <p className="mt-3 max-w-[52ch] text-[color:var(--color-ink-soft)]">
         Pick a role to set up your workspace. You can talk to us later to switch.

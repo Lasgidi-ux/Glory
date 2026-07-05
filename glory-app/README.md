@@ -1,4 +1,4 @@
-# GLORY — Phase 2 (Next.js app)
+# Cravagiq — Phase 2 (Next.js app)
 
 The creator ↔ brand distribution platform. This is the full-stack app build
 (Phase 2). The instant, static landing page lives at `../glory/` and deploys

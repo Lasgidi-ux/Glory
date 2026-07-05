@@ -76,7 +76,7 @@ export default function Footer() {
           <div>
             <Image
               src="/art/logo.png"
-              alt="GLORY"
+              alt="Cravagiq"
               width={1438}
               height={526}
               className="h-[22px] w-auto"
@@ -129,13 +129,13 @@ export default function Footer() {
             maskImage: "linear-gradient(180deg,#000 58%,transparent 96%)",
           }}
         >
-          GLORY
+          Cravagiq
         </div>
       </div>
 
       {/* ── baseline ── */}
       <div className="relative mx-auto flex max-w-[1400px] flex-wrap items-center justify-between gap-3 px-[clamp(20px,5vw,72px)] py-7 text-xs tracking-[0.06em] text-[color:var(--color-ink-mute)]">
-        <span>© 2026 GLORY — behind the world&apos;s biggest names.</span>
+        <span>© 2026 Cravagiq — behind the world&apos;s biggest names.</span>
         <a href="#top" data-hover className={foot}>
           Back to top ↑
         </a>

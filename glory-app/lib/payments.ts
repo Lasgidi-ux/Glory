@@ -134,7 +134,7 @@ export async function createEscrowCheckout(params: {
         price_data: {
           currency: "usd",
           unit_amount: params.amountCents,
-          product_data: { name: `GLORY deal · ${params.offerId}` },
+          product_data: { name: `Cravagiq deal · ${params.offerId}` },
         },
       },
     ],

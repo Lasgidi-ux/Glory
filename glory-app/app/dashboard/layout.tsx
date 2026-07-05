@@ -36,8 +36,8 @@ export default async function DashboardLayout({
             href="/"
             className="flex items-center gap-2.5 font-display text-2xl font-semibold"
           >
-            <Image src="/art/logo.png" alt="GLORY" width={1438} height={526} className="h-[16px] w-auto" />
-            GLORY
+            <Image src="/art/logo.png" alt="Cravagiq" width={1438} height={526} className="h-[16px] w-auto" />
+            Cravagiq
           </Link>
           <nav className="mt-10 flex flex-col gap-1 text-sm">
             {navItem("/dashboard/creator", "Creator", role === "creator")}
@@ -57,7 +57,7 @@ export default async function DashboardLayout({
       {/* mobile top bar */}
       <header className="flex items-center justify-between border-b border-[color:var(--hair-2)] px-6 py-4 lg:hidden">
         <Link href="/" className="font-display text-xl font-semibold">
-          GLORY
+          Cravagiq
         </Link>
         <UserButton />
       </header>

@@ -24,11 +24,11 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_APP_URL || "https://glory-coral.vercel.app"
   ),
-  title: "GLORY — The last real arbitrage in distribution.",
+  title: "Cravagiq — The last real arbitrage in distribution.",
   description:
-    "GLORY is the distribution engine behind the world's biggest brands and names. Where elite creators and the brands that need them meet, deal, and get paid.",
+    "Cravagiq is the distribution engine behind the world's biggest brands and names. Where elite creators and the brands that need them meet, deal, and get paid.",
   openGraph: {
-    title: "GLORY — Behind the world's biggest brands and names.",
+    title: "Cravagiq — Behind the world's biggest brands and names.",
     description: "The last real arbitrage in distribution.",
     images: ["/art/hero-glory.jpg"],
   },

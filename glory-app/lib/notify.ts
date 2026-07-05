@@ -46,7 +46,7 @@ const dash = (path: string) =>
 export async function notifyOfferSent(o: Pick<OfferRecord, "creatorId" | "scope" | "priceCents">) {
   await send(
     await emailFor(o.creatorId),
-    "You have a new offer on GLORY ✦",
+    "You have a new offer on Cravagiq ✦",
     `A brand wants to work with you: ${o.scope} — ${money(o.priceCents)}.\n\n` +
       `Review and accept it here: ${dash("creator")}`
   );
@@ -55,7 +55,7 @@ export async function notifyOfferSent(o: Pick<OfferRecord, "creatorId" | "scope"
 export async function notifyOfferAccepted(o: OfferRecord) {
   await send(
     await emailFor(o.brandId),
-    "Your GLORY offer was accepted",
+    "Your Cravagiq offer was accepted",
     `The creator accepted your offer: ${o.scope} — ${money(o.priceCents)}.\n\n` +
       `Fund escrow to get started: ${dash("brand")}`
   );

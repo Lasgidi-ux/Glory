@@ -33,18 +33,18 @@ export default function Nav() {
       <a
         href="#top"
         data-hover
-        aria-label="GLORY — home"
+        aria-label="Cravagiq — home"
         className="flex items-center gap-2.5 font-display text-[18px] font-semibold tracking-[0.02em] sm:gap-3 sm:text-[20px]"
       >
         <Image
           src="/art/logo.png"
-          alt="GLORY"
+          alt="Cravagiq"
           width={1438}
           height={526}
           priority
           className="h-[15px] w-auto sm:h-[17px]"
         />
-        GLORY
+        Cravagiq
       </a>
 
       {/* nav links */}

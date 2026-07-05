@@ -1,5 +1,5 @@
 -- ============================================================
--- GLORY — Supabase schema (Phase 3)
+-- Cravagiq — Supabase schema (Phase 3)
 -- Run in the Supabase SQL editor (Dashboard → SQL → New query).
 -- Auth is handled by Clerk; we key rows by the Clerk user id (text).
 -- ============================================================

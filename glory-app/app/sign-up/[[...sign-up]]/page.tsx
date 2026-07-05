@@ -11,7 +11,7 @@ export default function SignUpPage() {
           href="/"
           className="mb-8 block text-center font-display text-3xl font-semibold text-[color:var(--color-gold-soft)]"
         >
-          GLORY
+          Cravagiq
         </a>
         <SignUp />
       </div>

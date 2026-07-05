@@ -78,7 +78,7 @@ export default function Home() {
         >
           Every brand is fighting for the same feeds. The creators who own those
           feeds are stuck negotiating in DMs, chasing invoices, and leaving
-          money on the table. GLORY closes the gap — a single marketplace where
+          money on the table. Cravagiq closes the gap — a single marketplace where
           reach is priced, deals are signed, and payouts clear the moment the
           work ships.
         </Reveal>

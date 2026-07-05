@@ -46,7 +46,7 @@ function useHeroMode() {
   return { mode, motionOk };
 }
 
-const word = "Glory".split("");
+const word = "Cravagiq".split("");
 
 export default function Hero() {
   const { mode, motionOk } = useHeroMode();
@@ -139,7 +139,7 @@ export default function Hero() {
         </motion.p>
 
         <h1
-          aria-label="Glory"
+          aria-label="Cravagiq"
           className="m-0 font-display text-[clamp(72px,20vw,340px)] font-normal leading-[0.84] tracking-[-0.02em] text-[color:var(--color-gold-soft)]"
           style={{ textShadow: "0 2px 60px rgba(10,9,6,.5)" }}
         >

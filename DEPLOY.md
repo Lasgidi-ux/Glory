@@ -1,4 +1,4 @@
-# Deploying GLORY to Vercel
+# Deploying Cravagiq to Vercel
 
 The Next.js app lives in **`glory-app/`**. It **builds and runs with zero keys**
 (landing works immediately); each service switches on as you add its keys.
@@ -63,7 +63,7 @@ Then run `glory-app/supabase/schema.sql` in the Supabase SQL editor once.
 | Key | Example / value | Where |
 |---|---|---|
 | `RESEND_API_KEY` | `re_…` | resend.com/api-keys |
-| `WAITLIST_FROM_EMAIL` | `GLORY <hello@yourdomain.com>` | a verified sender/domain |
+| `WAITLIST_FROM_EMAIL` | `Cravagiq <hello@yourdomain.com>` | a verified sender/domain |
 
 ### 5) Cloudinary — creator media uploads (images + reels)
 | Key | Example / value | Where |
